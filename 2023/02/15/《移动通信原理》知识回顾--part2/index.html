@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"xj-bupt.top","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="chapter6 调制理论移动通信系统的物理模型 发射端需要考虑移动通信链路传输过程中所经历的各种噪声或干扰，噪声可以归纳为AWGN信道（一般电子设备通信设备都具有）、阴影衰落信道、小尺度衰落（空时频的扩散）、时变因素 对抗噪声需要在传输链路优化发射机和接收机：（1）时变因子–采用信道估计的方式，（2）小尺度（频率扩散因子-多普勒产生的快速时变–采用交织的方式进行；时间扩散因子–多径效应产生频率选">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《移动通信原理》知识总结--part2">
+<meta property="og:url" content="http://xj-bupt.top/2023/02/15/%E3%80%8A%E7%A7%BB%E5%8A%A8%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86%E3%80%8B%E7%9F%A5%E8%AF%86%E5%9B%9E%E9%A1%BE--part2/index.html">
+<meta property="og:site_name" content="Life Record Blog">
+<meta property="og:description" content="chapter6 调制理论移动通信系统的物理模型 发射端需要考虑移动通信链路传输过程中所经历的各种噪声或干扰，噪声可以归纳为AWGN信道（一般电子设备通信设备都具有）、阴影衰落信道、小尺度衰落（空时频的扩散）、时变因素 对抗噪声需要在传输链路优化发射机和接收机：（1）时变因子–采用信道估计的方式，（2）小尺度（频率扩散因子-多普勒产生的快速时变–采用交织的方式进行；时间扩散因子–多径效应产生频率选">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-02-15T09:40:27.030Z">
+<meta property="article:modified_time" content="2023-02-14T13:57:55.996Z">
+<meta property="article:author" content="XuJie_BUPT">
+<meta property="article:tag" content="移动通信原理">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://xj-bupt.top/2023/02/15/%E3%80%8A%E7%A7%BB%E5%8A%A8%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86%E3%80%8B%E7%9F%A5%E8%AF%86%E5%9B%9E%E9%A1%BE--part2/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>《移动通信原理》知识总结--part2 | Life Record Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/rss2.xml" title="Life Record Blog" type="application/rss+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Life Record Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">生活记录博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xj-bupt.top/2023/02/15/%E3%80%8A%E7%A7%BB%E5%8A%A8%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86%E3%80%8B%E7%9F%A5%E8%AF%86%E5%9B%9E%E9%A1%BE--part2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/tracer.jpg">
+      <meta itemprop="name" content="XuJie_BUPT">
+      <meta itemprop="description" content="希望自己摆脱身上的冷气，尽力发光发热">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Life Record Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          《移动通信原理》知识总结--part2
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-02-15 17:40:27" itemprop="dateCreated datePublished" datetime="2023-02-15T17:40:27+08:00">2023-02-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-02-14 21:57:55" itemprop="dateModified" datetime="2023-02-14T21:57:55+08:00">2023-02-14</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%A7%BB%E5%8A%A8%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">移动通信原理</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>17k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>16 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="chapter6-调制理论"><a href="#chapter6-调制理论" class="headerlink" title="chapter6 调制理论"></a>chapter6 调制理论</h2><h3 id="移动通信系统的物理模型"><a href="#移动通信系统的物理模型" class="headerlink" title="移动通信系统的物理模型"></a>移动通信系统的物理模型</h3><ol>
+<li>发射端需要考虑移动通信链路传输过程中所经历的各种噪声或干扰，噪声可以归纳为AWGN信道（一般电子设备通信设备都具有）、阴影衰落信道、小尺度衰落（空时频的扩散）、时变因素</li>
+<li>对抗噪声需要在传输链路优化发射机和接收机：（1）时变因子–采用信道估计的方式，（2）小尺度（频率扩散因子-多普勒产生的快速时变–采用交织的方式进行；时间扩散因子–多径效应产生频率选择性衰落–采用信道均衡技术、扩频和rake接受、ofdm和频域均衡来对抗；空间扩散因子–采用空间多天线收分集技术），（3）阴影衰落–采用功率控制进行对抗，（4）AWGN噪声–抗噪能力（最佳的信道编码、最佳的调制解调）</li>
+</ol>
+<h3 id="调制解调的基本功能与要求"><a href="#调制解调的基本功能与要求" class="headerlink" title="调制解调的基本功能与要求"></a>调制解调的基本功能与要求</h3><ol>
+<li>调制解调的功能：（1）载荷信息、频谱搬移（信号搬移到中射频）（2）抗干扰特性（可靠性）（3）频谱有效性（信道条件好，采用多阶调制）（4）调制信号的峰均比（工程中传输大功率信号，一般数字电路中产生小信号，大功率功放是非线性器件–小信号等比例放大，大信号会接近功率放大器的饱和区，产生信号的损伤），降低PARP–减小信号的动态范围</li>
+<li>数字调制的分类：（1）调制进制划分：二进制调制2ASK、2FSK、BPSK；多进制调制MASK、MPSK、MFSK。（2）调制器结构特征：无记忆调制（调制器输出波形只取决于当前输入没有记忆特性）、有记忆调制。（3）调制器的运算结构：线性调制（MASK、MPSK、MQAM）、非线性调制（工程中使用的连续相位调制GMSK）</li>
+<li>基本的二进制调制分析抗噪能力：（1）误码率（2）调制波形离散化映射到欧式空间，利用星座图上相邻两个信号点的欧氏距离的远近来判断：抗噪能力2ASK&lt;2FSK&lt;BPSK,各差3db，使用对数对数坐标系可以表征三种调制方式的抗噪能力。bpsk达到1e-5（数据业务）的误码率最少达到9.6db，1e-3（话音业务）需要7db</li>
+</ol>
+<h3 id="MSK-x2F-GMSK调制–GSM制式"><a href="#MSK-x2F-GMSK调制–GSM制式" class="headerlink" title="MSK&#x2F;GMSK调制–GSM制式"></a>MSK&#x2F;GMSK调制–GSM制式</h3><ol>
+<li>GMSK调制可以高度适应非线性功放，PARP为0db–恒包络</li>
+<li>MSK：最小移频键控调制，有记忆非线性–信号产生的调制波形与输入的比特序列之间不是线性对应关系。调制器：预编码（差分编码）-&gt;正交调制器。解调器：正交解调（积分、抽样判决、并串转换）-&gt;差分译码。MSK的前面可以级联滤波器，限制信号能量集中到主瓣以内–高斯型滤波器–GMSK–带外衰减很快，选定的时间带宽积为0.3，采用维特比算法由于具有记忆性性能好过BPSK</li>
+</ol>
+<h3 id="Π-x2F-4-DQPSK调制–PDC、IS-54-TDMA、PHS制式（2000年–小灵通）"><a href="#Π-x2F-4-DQPSK调制–PDC、IS-54-TDMA、PHS制式（2000年–小灵通）" class="headerlink" title="Π&#x2F;4-DQPSK调制–PDC、IS-54 TDMA、PHS制式（2000年–小灵通）"></a>Π&#x2F;4-DQPSK调制–PDC、IS-54 TDMA、PHS制式（2000年–小灵通）</h3><ol>
+<li>特点：有记忆调制，星座图由两个子星座图旋转叠加构成，D–差分，Π&#x2F;4–旋转，2个QPSK进行叠加–约束相邻两个符号周期信号点的取值只允许从一个星座图跳转到另外的子星座图–最大的相位跳变3Π&#x2F;4（带外衰减更快，能量更加集中，PARP低，可以减少邻道干扰）</li>
+<li>Π&#x2F;4-DQPSK解调先进性qpsk解调，再进行差分译码。更好的检测算法是利用有记忆的特性，画出状态图，使用viterbi算法进行检测可以获得2db增益。</li>
+</ol>
+<h3 id="3Π-x2F-8-8PSK调制（2-75G系统–GSM、GPLS的增强）"><a href="#3Π-x2F-8-8PSK调制（2-75G系统–GSM、GPLS的增强）" class="headerlink" title="3Π&#x2F;8-8PSK调制（2.75G系统–GSM、GPLS的增强）"></a>3Π&#x2F;8-8PSK调制（2.75G系统–GSM、GPLS的增强）</h3><ol>
+<li>多进制调制的动态范围大，信号的PARP较高，GSM使用二进制但是频谱效率低</li>
+<li>3Π&#x2F;8-8PSK调制–正交调制，8PSK最大相位跳变为Π–相位跳变越大说明带外衰减慢，更容易受到非线性畸变。3Π&#x2F;8-8PSK调制：两个8PSk叠加而成，包含16个星座点，信号在两个星座图之间跳变–限制相位的跃迁–最大相位跳变7Π&#x2F;8–带外衰减快。实际系统中在调制中加入高斯滤波器，使得主瓣能量进一步集中。</li>
+</ol>
+<h3 id="用于CDMA的调制（3G系统）"><a href="#用于CDMA的调制（3G系统）" class="headerlink" title="用于CDMA的调制（3G系统）"></a>用于CDMA的调制（3G系统）</h3><ol>
+<li>3G系统需要将扩频和调制组合起来，调制的本质–频谱搬移是必要条件不是充要条件，本质是频谱结构发生了改变，带宽扩展了；若带宽不变，只是频率搬移了则叫做变频（混频）；扩频的本质就是调制。CDMA系统因此包含两次调制–扩频、载波调制。</li>
+<li>调制器：输入信号乘扩频序列，再进行载波调制。解调器：载波解调、扩频解调得到原始信号。</li>
+<li>二级调制的抗噪能力与载波调制一致，原因：白噪声信道进行扩频，频谱扩展后多径信道或者窄带干扰信道传输时，只能干扰宽带中的小分量，接收端收集宽谱的信号可以对抗这个干扰。扩频调制无法对抗白噪这种宽带的信号。</li>
+<li>2G系统的IS-95中使用DS-SS平衡四相扩频调制，I、Q路不是串并变换得到，是拷贝得到的–平衡，抗噪能力和BPSK一致</li>
+<li>3G系统中WCDMA使用CQPSK复四相扩频调制，I、Q路是串并变换得到，I、Q路存在交叉链路–需要I、Q两路调制信号后的动态范围平衡。解调器需要正交解调，后一部分进行扩频解调。抗噪声能力和QPSK一致</li>
+<li>IS-95中上行链路引入OQPSK（偏移相位的QPSK）进行PARP控制：Q路相对I路进行相位偏移半个符号周期（1个bit周期），从而减少了相位的跳变</li>
+<li>CDMA2000中引入CQPSK，和复四相扩频调制一致，进一步定名为HPSk混合移相键控，数据速率是OQPSK和QPSk的两倍，峰均比也得到下降</li>
+</ol>
+<h3 id="MQAM调制（4G系统中LTE、802-11n、WiMax）"><a href="#MQAM调制（4G系统中LTE、802-11n、WiMax）" class="headerlink" title="MQAM调制（4G系统中LTE、802.11n、WiMax）"></a>MQAM调制（4G系统中LTE、802.11n、WiMax）</h3><ol>
+<li>3G最多使用到8PSK，只能达到3bit&#x2F;s&#x2F;hz。4G使用高进制的MQAM调制。</li>
+<li>MQAM中优化比特到符号的映射关系–格雷映射</li>
+<li>一般而言，差信道使用4QAM–QPSK，中等信道使用16QAM，高信道使用64QAM–AMC自适应编码调制技术，coding选择码长码率，调制选择阶数。</li>
+</ol>
+<h2 id="chapter7-信道编码"><a href="#chapter7-信道编码" class="headerlink" title="chapter7 信道编码"></a>chapter7 信道编码</h2><h3 id="信道编码的基本概念"><a href="#信道编码的基本概念" class="headerlink" title="信道编码的基本概念"></a>信道编码的基本概念</h3><ol>
+<li>信源编码得到发送码元称为信息码元，加入的冗余是校验比特，以提高可靠性。</li>
+<li>分类方案<br>（1）功能上，检错码（CRC、奇偶校验码），纠错码FEC（主要研究内容，循环码的BCH码、RS码、卷积码、级联码、Turbo码）、检错和纠错混合的编码–HARQ混合自动重传（2）结构和编码规律：线性码（监督关系方程是线性方程，大多数实用化的信道编码使用）、非线性码。二进制的典型线性运算：加、乘，非线性运算：与或反非。线性码进一步划分–分组码LBC（n，k）–代数结构好、非分组码（离散线性时不变系统）–代表为卷积码（n、k、m）序列输入，依次编码，m代表记忆的时钟节拍–记忆长度</li>
+<li>典型的信道编码：（1）级联码–简单编码符合构造，分为串行级联码和并行级联码（2）一般FEC不能100%准确传输。ARQ（TCP中添加CRC校验，固定数据通信网中常用）、HAQR（移动通信网中使用，3G往后常用）–检错加纠错</li>
+<li>信道编码定理：R&lt;&#x3D;C，码长无限长时，差错概率趋近于0，码率趋近于信道容量。</li>
+</ol>
+<h3 id="线性分组码"><a href="#线性分组码" class="headerlink" title="线性分组码"></a>线性分组码</h3><ol>
+<li>信息位重复出现称为系统码，实际使用简单。</li>
+<li>系统码的生成矩阵（I、Q）C&#x3D;U<em>G，校验矩阵 0’&#x3D;H</em>C’</li>
+<li>n维的二进制空间称为汉明空间，G、H是对n为空间的正交划分</li>
+<li>译码时使用校验矩阵H和接受信号相乘得到的方程组的解是无穷个的，可以选择错误概率最小的一个作为错误样本，实际系统中不适用，需要优化代数结构便于求解–循环码，引入码多项式进行表述，而不是用矩阵进行表示，伽罗华域的模2加等价于多项式的相乘，两个码字的汉明距离等于它们模2加的汉明重量</li>
+<li>BCH码是重要的循环码，可以纠正多个独立的比特差错，用于高等级的存储系统</li>
+<li>RS码是多进制的BCH码，不是纠正多个bit差错，用于纠正多个符号差错，纠错能力强于BCH，也可以纠正多个独立差错和突发的差错，在需要高可行的数据储存和传输系统中得到应用–CD唱片</li>
+<li>循环码的CRC用于检错，能发现n-k+1个突发错误</li>
+</ol>
+<h3 id="卷积码–离散线性时不变系统"><a href="#卷积码–离散线性时不变系统" class="headerlink" title="卷积码–离散线性时不变系统"></a>卷积码–离散线性时不变系统</h3><ol>
+<li>卷积码解析法描述编码，图形法描述译码。</li>
+<li>解析法用数学公式进行表达，包括离散卷积法、生成矩阵法、码生成多项式法</li>
+<li>图形法包括状态图、树图（引入了时序）、格图（树图的压缩）来表示</li>
+<li>LTI系统描述方法：离散卷积法，简化可以表示成矩阵的方法，冲激响应组合成为等效的生成矩阵（移位带状矩阵–维度可以变化），卷积码为非分组码，原则上没有生成矩阵，这里是只是一种等效的写法；进一步简化为码多项式，</li>
+<li>状态图包含2^km个状态</li>
+<li>树图是状态图随时间转移的图，二叉满树–结构会很大，简化得到trellis格图。</li>
+<li>卷积码使用viterbi算法（卫星通信、数字地面广播、移动通信系统）–最优译码算法，平均差错概率最小等价于后验概率最大MAP–最佳译码准则，先验等概时，MAP等价于最大似然准则，最大似然准则在BSC信道等价于最小汉明距离译码，在AWGN信道等价于最小化欧氏距离准则</li>
+<li>最大似然译码不可能实现，搜索量是指数增长的，遍历搜索是不可行的，viterbi最大限度降低搜索量–逐段比对：ACS运算add compare select运算,复杂度O(N*2^K(m+1))</li>
+</ol>
+<h3 id="级联码"><a href="#级联码" class="headerlink" title="级联码"></a>级联码</h3><ol>
+<li>串行级联码：1969年提出，RS和卷积码级联常被使用。靠近信道–内编码器用卷积码，外编码器用RS，最小汉明距离为两者相乘。NASA提出的深空通信CCSDS标准使用，距离shannon限2db。</li>
+<li>并行级联码–Trubo</li>
+</ol>
+<h3 id="Turbo码"><a href="#Turbo码" class="headerlink" title="Turbo码"></a>Turbo码</h3><ol>
+<li>一路输入、三路输出–三支路的并行结构：信息位+分量码编码器CC（系统反馈卷积码RSC）、信息位+[交织器+分量码编码器CC]（反馈迭代系统卷积码RSC）</li>
+<li>译码器采用迭代译码算法：SISO软输入软输出迭代译码算法-BCJR算法，可以达到MAP准则，与shannon限差1-2db，1993年ICC中发表文章，成为3G、4G的标准。</li>
+<li>优越性是对shannon信道编码定理证明思路的模拟，对具有随机性的长码进行编码</li>
+<li>5G的data使用LDPC码，性能比Turbo码还好，数据吞吐量高</li>
+<li>2009年Arikan提出了polar码，可以严格达到信道容量，理论上有重大突破，工程上应用复杂，有限码长下性能不是很好</li>
+</ol>
+<h3 id="交织编码"><a href="#交织编码" class="headerlink" title="交织编码"></a>交织编码</h3><ol>
+<li>突发性差错很难纠正，可以把突发差错信道进行改造称为独立无记忆差错信道–交织编码</li>
+<li>交织：ram中竖向存储，横向读取</li>
+</ol>
+<h3 id="ARQ和HARQ简介"><a href="#ARQ和HARQ简介" class="headerlink" title="ARQ和HARQ简介"></a>ARQ和HARQ简介</h3><ol>
+<li>ARQ：自动反馈重传，分为SW、GBN（固定通信网络、IP传输中使用）、SR（只传输错误数据包）三种类型</li>
+<li>HARQ：检错重传+纠错（3G、4G、5G中采用）：高可靠性、高吞吐率。分为两类，第一类初传重传完全一致，第二类重传根据信道条件选择性传输信息（IR–增量冗余的方式）</li>
+</ol>
+<h3 id="信道编码理论上的潜在能力与最大编码增益"><a href="#信道编码理论上的潜在能力与最大编码增益" class="headerlink" title="信道编码理论上的潜在能力与最大编码增益"></a>信道编码理论上的潜在能力与最大编码增益</h3><ol>
+<li>给定传输带宽、传输时间、传输功率下，香农信道容量C&#x3D;F<em>T</em>log（1+snr），逆公式可以得出给定频带利用率（bit&#x2F;s&#x2F;hz）下的最低信噪比–shannon信噪比。</li>
+<li>不同调制下只能得到调制容量，得不到信道容量，信道容量要求输入是高斯分布，而不是调制的到的离散的信号分布，将不同调制得到的曲线的饱和点连成的曲线是没有编码下的达到最大频带利用率对应的最低信噪比，曲线之间是一个平行的关系–8db，这个差距就是靠信道编码来弥补的。</li>
+<li>高信噪比下，shannon信道容量限和调制容量的差距需要靠编码、星座成型增益来获得。低信噪比靠编码获得即可。</li>
+</ol>
+<h3 id="GSM系统的channel-coding"><a href="#GSM系统的channel-coding" class="headerlink" title="GSM系统的channel coding"></a>GSM系统的channel coding</h3><ol>
+<li>移动通信中语音业务采用卷积码编码、数据业务&#x2F;信令采用高可性编码、突发差错采用交织、增强链路可靠性使用CRC进行检错实现HARQ</li>
+<li>data 3&#x2F;4G–turbo码 5G–LDPC码</li>
+<li>信令 3&#x2F;4G–LBC&#x2F;CC码 5G–Polar码</li>
+<li>GSM 语音使用卷积码，数据业务使用LBC。典型的采用串行级联码+交织，外编码器使用循环码，内编码器使用（2，1，4）卷积码。</li>
+</ol>
+<h3 id="IS95系统的channel-coding"><a href="#IS95系统的channel-coding" class="headerlink" title="IS95系统的channel coding"></a>IS95系统的channel coding</h3><ol>
+<li>信令和数据业务采用检错机制CRC</li>
+<li>话音业务FEC编码：下行使用（2，1，8）卷积码，上行使用（3，1，8）卷积码</li>
+</ol>
+<h3 id="CDMA2000系统的channel-coding"><a href="#CDMA2000系统的channel-coding" class="headerlink" title="CDMA2000系统的channel coding"></a>CDMA2000系统的channel coding</h3><ol>
+<li>信令和数据业务采用检错机制CRC</li>
+<li>话音业务使用卷积码、数据业务使用turbo码（2，1，3）分量码</li>
+</ol>
+<h3 id="WCDMA系统的channel-coding"><a href="#WCDMA系统的channel-coding" class="headerlink" title="WCDMA系统的channel coding"></a>WCDMA系统的channel coding</h3><ol>
+<li>上下行链路的编码流程相对复杂–支持话音、数据各种业务（话音业务–卷积码（2，1，8），数据业务–Turbo）</li>
+<li>交织器与CDMA2000不同，出于专利的原因</li>
+</ol>
+<h2 id="chapter8-分集和均衡"><a href="#chapter8-分集和均衡" class="headerlink" title="chapter8 分集和均衡"></a>chapter8 分集和均衡</h2><h3 id="分集技术的基本原理"><a href="#分集技术的基本原理" class="headerlink" title="分集技术的基本原理"></a>分集技术的基本原理</h3><ol>
+<li>分集：diversity，分：对衰落后混叠的信号进行有序分离，集：对分离信号做有效合并；以提高接收信号的质量</li>
+<li>用于多径衰落信道中的提高传输的可靠性，分集用于对抗小尺度中时空频的选择性衰落</li>
+<li>2G的GSM系统中的3扇区6天线–下行是单个天线发，上行是2个天线接收–对抗空间选择性衰落，提高接收信号质量</li>
+<li>3G的CDMA系统中宽带信号可以对抗脉冲和窄带干扰，多径就是典型的窄带干扰，利用扩频序列的码字特征使用rake接受分离扩散到多条路径的信号再进行合并–频率分集</li>
+<li>分集的必要条件：把多路在统计意义上相互独立的信号进行叠加，如何保证信号相互独立–空间的相互独立：接收天线间距大于接受电磁波波长的10倍，频率分集–两个信号的频率间隔需要大于相干带宽。</li>
+<li>分集的合并：最大比、等增益、选择合并</li>
+<li>分集技术的分类（1）方式：空间分集（收、发独立的天线）、频率分集（CDMA的rake接收机、均衡技术）、时间分集（多个独立时间段的数据合并–HARQ）（2）合并方式（3）合并位置：接收机射频前端、中频处理、基带合并（数字接收机常用）（4）处理手段：收、发、收发联合（5）增益来源：显（付出了设备的成本代价–天线）、隐分集（优化信号编码、调制、波形，接收机的接受算法等等），显增益大，隐增益适中</li>
+<li>空间分集：多天线独立的发射接收。变种：极化分集（天线设置两种极化方向）、角度分集（辐射源不在天线的焦点位置，存在两个辐射角，各自进行辐射）</li>
+<li>频率分集：位于宽带信号的多个独立的多径分量先分离再收集，信号分量差大于相干带宽</li>
+<li>时间分集：发送端初、重传实现时间分集</li>
+<li>最大比合并MRC：1发天线n个接受天线，传输链路经过独立的衰落，各个链路进行加权合并，权重系数使用信道系数的共轭，使得输出信噪比最大化。AWGN信道最佳接收机是匹配滤波器，匹配滤波器应该和发送信号波形匹配–时域匹配。MRC是空域接收机，扩展到空间的匹配滤波器。缺点：需要估计每一个链路信道，复杂度高。为了简化可以使用等增益合并，信噪比损失1db左右。</li>
+<li>选择合并：选择一个链路进行信号的检测处理，设备成本很低。</li>
+<li>三种分集方式在8重支路基本就达到饱和了，EGC和MRC性能差别不大</li>
+</ol>
+<h3 id="RAKE接受与多径分集"><a href="#RAKE接受与多径分集" class="headerlink" title="RAKE接受与多径分集"></a>RAKE接受与多径分集</h3><ol>
+<li>RAKE接收机是频率分集技术，是一种隐分集技术。多径会导致幅度、相位上都有随机的起伏变化，因此可以看作二维空间的向量，收到的信号可以看作矢量叠加的和，RAKE接收机可以分离各个路径的向量，并在幅度相位补偿再进行叠加。</li>
+<li>IS-95系统中使用RAKE接收机，最大可分辨径数L&#x3D;信号带宽&#x2F;相关带宽&#x3D;1.25M&#x2F;200K&#x3D;6，实际环境中L更小，有些径的能量很微弱。</li>
+<li>RAKE接收机：指峰接收机（一路为一条多径信号）、多径搜索单元、信道估计单元、叠加单元。指峰接收机包括时间补偿（先到的晚出FIFO，从而补偿时间的差异）、解扩单元。多径搜索单元确定每径的相对时延。信道估计单元：信道估计利用每一径的导频进行信道估计，作为权重因子给到每一径信号。叠加单元是进行合并。</li>
+<li>RAKE基本结构只有在AWGN信道才比较有效，但是不是最佳接收机，纯粹的AWGN采用匹配滤波器可以达到最好的效果，（1）一路用户的多径使用RAKE不是最好的接收机–对准一条径的相关器是有用分量，其他径通过相关器输出的是多径干扰，就会导致ISI，就是每一路指峰接收机输出包含噪声、有用信号、多径干扰三个分量，码间干扰依靠匹配滤波器不能完全消除，需要设计消除码间干扰的算法。理论上最好的接受机：MLSE最大似然序列均衡器，采用的算法viterbi算法，但是复杂度较高。（2）多用户的多径系统，干扰是非常复杂的，RAKE最为单用户接收机无法适用于这个场景，因此性能很差。用户间干扰，使用扩频码字抵消，即G-RAKE接受机，加权是不是最大比合并，需要消除用户间干扰。</li>
+</ol>
+<h3 id="均衡技术"><a href="#均衡技术" class="headerlink" title="均衡技术"></a>均衡技术</h3><ol>
+<li>接收端补偿信道的非线性特性，补偿ISI。发展阶段：60年代的模拟频域均衡，需要设计滤波器。70年代后发展成为数字的时域均衡算法–抽头数很多，复杂度提高。2000年数字化频域均衡出现。</li>
+<li>均衡器的分类–结构分类：时域均衡器可以分为线性均衡器(按照不同准则可以划分为迫零均衡器–峰值失真准则、MMSE均衡器–最小均方误差准则)、非线性均衡器（判决反馈均衡器DFE、MLSE最大似然序列均衡器等）</li>
+<li>线性均衡器：FIR、IIR都可。滤波器系数调整的准则：峰值失真准则、MMSE最小均方误差准则。（1）峰值失真准则：点优化准则–调整抽头系数只关心抽样时刻的码间干扰最小，其他位置不关心，需要解方程–ZF算法，（2）MMSE：区间优化准则–波形存在时间内的误差的平方取平均最小，原则上自适应滤波算法–维纳滤波算法，采用递推迭代的算法，有两类–最小均方算法LMS、递归最小二乘算法–RLS算法。LMS算法–线性随机梯度下降算法，梯度搜索的思想。引入了非线性就成为了卷积神经网络。RLS算法–Kalman滤波算法。但是RLS性能高于LMS，但是太灵敏了，系统扰动就会导致算法不收敛，不鲁棒</li>
+<li>非线性均衡器：DFE：前馈滤波器、反馈滤波器、判决器（硬判决）构成，因此是非线性均衡器，是一个负反馈结构，信道的干扰会消除的非常彻底。ADSL中使用–宽带接入上网的方式。DFE的优点：高信噪比下性能好，缺点：移动通信环境下信道质量差，重建的干扰也是错的，会进一步恶化。</li>
+<li>预均衡技术THP–预编码技术：发端知道码间干扰的影响，进行预先抵消。和DFE完全类似，用于克服错误传播，THP的缺点：要求发射机完全知道信道响应信息</li>
+<li>频域均衡技术在4G OFDM系统中经常使用：主要是克服时域均衡计算复杂性，卷积的复杂度O(N^2),卷积定理可以换成频域相乘，复杂度低。4G宽带系统通信系统中采用FFT支持的OFDM形式的频域均衡算法。</li>
+</ol>
+<h3 id="增强技术与应用"><a href="#增强技术与应用" class="headerlink" title="增强技术与应用"></a>增强技术与应用</h3><ol>
+<li>GSM&#x2F;EDGE采用SAIC单天线干扰消除技术–联合检测&#x2F;解调JD和盲干扰抵消BIC技术。干扰抵消技术：同时检测有用信号、干扰信号，消除干扰后重新检测</li>
+<li>WCDMA系统、HSPA系统采用广义RAKE接收机、码片级的均衡器（抵消多径干扰、多用户干扰）</li>
+</ol>
+<h2 id="chapter9-多用户检测技术"><a href="#chapter9-多用户检测技术" class="headerlink" title="chapter9 多用户检测技术"></a>chapter9 多用户检测技术</h2><h3 id="多用户检测的基本原理"><a href="#多用户检测的基本原理" class="headerlink" title="多用户检测的基本原理"></a>多用户检测的基本原理</h3><ol>
+<li>CDMA中最主要的是多址干扰，来源于多个用户，对抗多址干扰无法使用RAKE接收机，需要使用MUD技术，联合检测多个用户的信号，可以有效地抵消内部的干扰</li>
+<li>MUD可以消除多址干扰，可以减少消除多径干扰，可以消除远近效应（工程上使用功率控制），可以弥补扩频码互相关特性不理想带来的系统容量、小区覆盖问题。</li>
+<li>MUD缺点：接收算法会复杂很多，受具体场景局限</li>
+</ol>
+<h3 id="最优多用户检测技术"><a href="#最优多用户检测技术" class="headerlink" title="最优多用户检测技术"></a>最优多用户检测技术</h3><ol>
+<li>最简单的CDMA：同步CDMA系统，同步–链路同步（Tx、Rx保持同频同相，时钟保持一致）、小区同步（1个小区，多个移动台，上行阶段，基站接受用户的数据是时间对齐的。异步CDMA不考虑补偿相对时延。WCDMA、CDMA2000–异步，TD-SCDMA–同步）、网络同步（多个小区构成的网络，基站之间的时序保持一致，一般情况下要求时序保持一致）。基站侧，第k个滤波器输出包含有用信号、加性噪声、其他用户的多址干扰，接收信号可以使用矩阵表示–随机向量的噪声模型，理论上变成k维概率推断问题，理论上ML是最优检测方案–联合似然概率最大化，穷举信号组合使得接收信号概率达到最大：平方欧氏距离最小，复杂度O(2^k)–随用户数指数增长</li>
+<li>异步最优多用户检测：用户间干扰，一个用户前后波形对其他用户也有干扰。引入两个指标–用户序号、符号序号，使用等间隔时延进行简化（时延相同退化成同步CDMA）；各个用户扩频序列一致的情况下（波形一致）–异步cdma的多址干扰退化成了传统意义的ISI，ISI–最佳检测使用ML序列均衡算法。</li>
+<li>异步CDMA：定义两个相关系数–当前符号与其他用户的相邻两个符号，第k个匹配滤波器（相关器）第i个符号周期输出的信号包含有用信号、白噪、相比与K个用户早晚到的信号进行干扰–异步系统在时间上存在记忆性。接受信号为高斯随机向量，最大似然算法最优，复杂度O(2^k（2M+1）)其中2M+1为帧长、k为用户数。</li>
+<li>异步最有多用户检测可以简化为Trellis图，使用viterbi算法进行简化，复杂度O(2^k)</li>
+</ol>
+<h3 id="线性多用户检测技术–工程"><a href="#线性多用户检测技术–工程" class="headerlink" title="线性多用户检测技术–工程"></a>线性多用户检测技术–工程</h3><ol>
+<li>类似于均衡，将卷积使用卷积矩阵表示。迫零算法使用解方程，MMSE使用序列均方误差最小。多用户检测算法中由于模型和均衡模型一致，因此有ZF、MMSE的MUD，两类都是线性检测器</li>
+<li>ZF–解除多址干扰，y&#x3D;RAb+n,使得RA为对角阵，解除用户间干扰–解相关多用户检测器–方法左右乘A的逆矩阵，可以完全消除多址干扰，但是低SNR情况下会恶化噪声，进一步降低SNR。</li>
+<li>MSE–不能完全消除多址干扰，但不恶化SNR</li>
+<li>ZF、MSE需要求矩阵的逆，可以使用多项式级数近似求解–多项式展开PE检测器，矩阵的逆使用级数表示–工程使用三级结构表征，也可以用于Massive-mimo中。</li>
+<li>为了适应时变信道，还提出了基于训练序列的自适应多用户检测器：单用户自适应检测–分别针对每个用户进行检测（成本低），多用户自适应检测–联合用户根据信道时变性进行检测（效果好）</li>
+<li>盲多用户检测算法：BLIND–不使用导频，根据信号的结构特征进行信号检测，可以有效降低开销，但是算法收敛性差，只能用于时变性小的信道或者固定非理想的信道，理论上探讨，工程上使用少</li>
+</ol>
+<h3 id="干扰消除多用户检测器–工程"><a href="#干扰消除多用户检测器–工程" class="headerlink" title="干扰消除多用户检测器–工程"></a>干扰消除多用户检测器–工程</h3><ol>
+<li>线性：结构设计到线性运算–矩阵变化。非线性：干扰抵消的算法</li>
+<li>类似于DFE：重建干扰用于下一次检测。干扰消除多用户检测器：先判决一部分用户信号，重建干扰后检测其他用户。</li>
+<li>SIC–串行干扰抵消检测器：一个用户逐次检测，重新扩频调制重建，总信号减去这个信号，再依次检测其他用户–串行抵消的过程，工程应用中需要保证判决的可靠性，确定最佳判决顺序–检测信号能量最强的再递减。SIC缺陷：串行结构时延较大，最多用于4个用户；容易出现错误传播的过程导致性能进一步下降</li>
+<li>PIC–并行干扰抵消检测器：并行估计用户，重建所有用户的干扰，再进行检测，采用两级结构进行检测，在错误传播现象上有所缓解，但不可避免。</li>
+<li>ZF-DF迫零判决反馈检测器：相关矩阵进行SVD分解，重构信号分量，得到下三角矩阵，求解方程时可以不断进行递推进行干扰重建抵消，性能优于SIC、PIC。</li>
+</ol>
+<h2 id="chapter10-OFDM技术–正交频分多路复用"><a href="#chapter10-OFDM技术–正交频分多路复用" class="headerlink" title="chapter10 OFDM技术–正交频分多路复用"></a>chapter10 OFDM技术–正交频分多路复用</h2><h3 id="OFDM基本原理"><a href="#OFDM基本原理" class="headerlink" title="OFDM基本原理"></a>OFDM基本原理</h3><ol>
+<li>OFDM：多路数据并行传输–正交多载波技术，2G、3G–单载波调制，4G–多载波技术。</li>
+<li>2G-4G的抗干扰技术，移动通信中最主要是多径干扰，导致ISI。2G–采用均衡技术；3G–cdma导致频谱变宽，均衡会导致抽头变多，因此使用RAKE接收机；4G–信号带宽更宽，信号带宽达到20M，采用OFDM技术。</li>
+<li>OFDM系统关键参数：子载波数目、保护时间、符号周期、载波间隔、载波的调制方式、前向纠错编码的选择。</li>
+<li>OFDM是一个频带信号，不是基带信号。子载波的正交性，一个周期内两个子载波积分为冲激算子，子载波都使用的复载波，任何周期积分都为0，各个载波是谐波的关系–2Π&#x2F;T为基频，不正交会存在ICI–载波间干扰</li>
+<li>OFDM信号的特点–高PAPR，只能适用于线性度比较好的功率放大器。</li>
+<li>OFDM信号的产生：利用FFT进行解调，IFFT进行调制，而不是用多个相关器。</li>
+<li>OFDM信号的频谱特性：时域上周期信号需要加窗–矩形窗T，频域上为sa函数的频移。频谱仪上观察到的是一个包络，旁瓣衰减都比较慢。</li>
+<li>OFDM的信号是频域承载数据，解调时需要在频域进行，在频域上抽样判决检测，最佳采样频点–相邻子载波为0–ICI（载波干扰），类比于时域上的相邻抽样点为0克服ISI</li>
+<li>OFDM在多径的效果，多径会导致ISI，频域采样失准时会导致ICI，OFDM信号之间插入保护时间–最直接的是不发送信号（不能消除多径导致的干扰，反而会导致ICI），前缀波形使用CT循环前缀，形成CP-OFDM可以保证多径的各个子载波也相互正交确保没有ICI并且消除多径干扰，多径的相同子载波靠信道估计和频域均衡来利用有效信号并消除不良影响，坏处是信号的重复，浪费了功率、信号带宽。循环前缀的长度大于最大多径时延的时间，保证没有ISI。LTE系统的CP时间为4.6-5us，城区环境中最大时延5us。</li>
+<li>OFDM工程实现中sa函数带外衰减慢，同步不准确会导致ICI，为了降低ICI，时域加窗使得带外衰减更快，时域上添加升余弦滚降滤波器窗，相当于频域进行滤波，窗的滚降因子不能太大，拖尾会长，越大衰减越快。</li>
+<li>完整结构：（1）发送机–编码，交织，QAM调制，插入导频，s&#x2F;p变换，IFFT，p&#x2F;s变换，加入循环前缀和窗，DAC，中频射频调制，TX发送。（2）接收机–RX接受，ADC，时间同步（找到帧头，符号的起始位置，确定出积分的窗），去除循环前缀，S&#x2F;P变换，FFT，P&#x2F;S转换，频域信道补偿，QAM解调，解交织，信道译码</li>
+<li>OFDM系统设计需要确定循环前缀的保护时间、确定符号周期（子载波的间隔）–至少大于5倍循环前缀的长度–实际工程中很大（降低信噪比的损失）、子载波的数目（过采样，空闲一些子载波，降低时频同步的难度）</li>
+</ol>
+<h3 id="OFDM中的信道估计"><a href="#OFDM中的信道估计" class="headerlink" title="OFDM中的信道估计"></a>OFDM中的信道估计</h3><ol>
+<li>利用cp对抗多径干扰，同一个子载波多径的干扰的非理想效应使用信道估计、频域均衡来对抗。</li>
+<li>衰落信道中进行信道估计–盲估计、非盲估计。盲估计用于慢变信道，非盲算法包含数据辅助和判决指导算法，一般使用数据辅助–插入导频。</li>
+<li>插入导频的两种方式：导频符号、导频子载波。导频符号：一个t时间内，占满所有载波频段。导频子载波：间隔插入序列，形成散点的样子。导频符号用于初始估计，导频子载波用于信道时变特性的的跟踪。</li>
+<li>OFDM系统中的导频插入的准则–类似时域奈奎斯特采样定理，目的是对时频二维的信道相应进行估计，将时频二维的信道相应看作时频二维的波形，因此需要满足二维采样定理：相邻两个载波在频域的间隔小于相干带宽&#x2F;子载波间隔（导频需要保证每个子载波存在一个），时域间隔小于相干时间&#x2F;2符号周期（一个相干时间中至少存在两个样值）。</li>
+<li>常见的信道估计算法–数据辅助：（1）LS估计算法–频域LS估计：每个子载波估计自己的信道响应，解一元一次方程。h（n，k）&#x3D;y（n，k）&#x2F;x（n,k）(n个符号，k个子载波).类似于迫零算法的解方程，因此LS能过够估计信道相应，但是会放大噪声（2）LS估计算法–时域LS估计：可以知道信道冲激响应的长度，性能会好一些。同（1）已知导频子载波的信道响应后，数据子载波的信道响应通过时频插值的方式获得–线性、非线性插值.（3）LS会放大噪声，可以采用DFT估计算法–变换域：现在频域上采用最小二乘估计，估计导频子载波信道响应，将估计值做逆傅里叶变换到时域，利用先验信息（信道的冲激响应持续时间小于CP的长度）将时域的响应分为cp抽头（保留）、N-cp抽头（置为0），在进行FFT变换，降低了信道估计的误差（4）最佳的信道估计算法–MMSE：考虑信道响应与导频之间的相关矩阵，对矩阵求逆，复杂度高。</li>
+<li>常见的信道估计算法–判决指导算法（DDCE）：信号经过解调、译码重构后作为导频使用，以进行信道估计，复杂度较高</li>
+<li>4G、5G引入了多天线，还要估计空时频三个维度的信道相应，导频需要满足空间采样定理</li>
+</ol>
+<h3 id="OFDM的同步技术"><a href="#OFDM的同步技术" class="headerlink" title="OFDM的同步技术"></a>OFDM的同步技术</h3><ol>
+<li>同步：保证时频同步。时域同步–确定OFDM的符号边界，去掉cp进行积分，确定最佳采样时刻，以消除ISI。频域同步–保证收发之间的频差尽可能小，减少载波、多普勒频移的影响。</li>
+<li>频率同步误差的影响：子载波引入频差，不再是谐波，会导致不严格正交，从而会导致ICI，不随着SNR的提升而改变。若频偏大于一个子载波，载波错误会导致系统性能严重下降，若频偏小于一个子载波，导致系统性能下降，采用导频进行跟踪补偿。</li>
+<li>时间同步的误差：窗长对系统的影响，FFT窗的位置会漂移导致ISI，FFT窗漂移位置分为前置（积分窗包含部分CP、全部data）、后置（部分data，后一符号的cp和部分data）两种，后置会引入OFDM的符号间干扰IBI、载波间干扰ICI，因为没有构成完整的波形，各个径各个子载波之间都会有干扰。OFDm系统一般前置6个样值。</li>
+<li>时频同步：分为捕获跟踪两个阶段。捕获为粗同步，跟踪进行细搜索。–四类OFDM同步算法。粗同步：利用循环前缀的周期性结构估计频偏和OFDM符号的开始边界（适用于高snr）；细同步：利用同步头等训练序列进行同步，与CDMA系统类似。</li>
+</ol>
+<h3 id="PARP抑制"><a href="#PARP抑制" class="headerlink" title="PARP抑制"></a>PARP抑制</h3><ol>
+<li>载波数越多，PAPR越大。</li>
+<li>PAPR抑制方式：（1）信号预畸变技术：限幅滤波技术、压缩扩张变换（2）编码类技术：分组编码法、GOLD序列、RM码（3）概率成形类技术：选择性映射、部分传输序列等等</li>
+<li>预畸变技术：（1）添加限幅电平–非线性操作–带宽展宽需要滤波，LTE、WIMAX使用（2）压缩扩张方法：参考PCM编码中a、u律，小信号放大，大信号缩小–终端设备需要约定</li>
+<li>编码方法：减少使用高峰均比的码组–编码是线性映射，对信号没有损伤，工程上限制–发送接送需要提前约定</li>
+<li>概率方法：交织技术等，工程上限制–发送接送需要提前约定，学术界研究</li>
+</ol>
+<h2 id="chapter11-MIMO空时处理技术"><a href="#chapter11-MIMO空时处理技术" class="headerlink" title="chapter11 MIMO空时处理技术"></a>chapter11 MIMO空时处理技术</h2><h3 id="多天线信息论简介"><a href="#多天线信息论简介" class="headerlink" title="多天线信息论简介"></a>多天线信息论简介</h3><ol>
+<li>3G以后开始使用多天线技术，MIMO系统空间<strong>复用技术SM</strong>–多个天线各路承载不同的数据获得复用增益、<strong>空间分集技术</strong>–多发多收通过<strong>信号设计</strong>获得分集增益提高信号可靠性、<strong>预编码技术</strong>–发射机做波形优化（天线乘矩阵&#x2F;抽头系数改善发端的特性）获得可靠性和吞吐率的提升。</li>
+<li>多天线信息论：Telatar得到高斯信道下的多天线的信道容量、bell实验室得到准静态衰落信道条件下截止信道容量（20世纪90年代）</li>
+<li>MIMO系统的信号模型：Hij–独立随机的信道状态，i收j发（Nr*Nt信道响应矩阵），一个接受天线受到多个发射天线的信号，假设不存在直射路径，H矩阵的元素可以看成散射体散射的多径，H中的元素服从复高斯随机过程–IQ两路。由此接收信号分解为加性噪声向量本身的协方差矩阵+发射信号经过信道后的协方差矩阵。H矩阵只有主对角线的元素有用，此时没有干扰–理想条件下</li>
+<li>均衡技术时多用户检测技术的基础、OFDM技术也是类似模型。将多用户检测的矩阵等效为MIMO的信道矩阵（每一个用户的信号–每一个天线的信号），将天线可以等效为虚拟用户，MIMO检测算法可以借鉴多用户检测算法。</li>
+<li>信道响应矩阵的对角化–使用奇异值分解H&#x3D;UDV，U、V酉矩阵，D对角矩阵，在此基础上对Y信号进行酉变换，右乘酉矩阵相当于进行矩阵变换，D矩阵可能不满秩，分解后得到纯信号信道（r个复高斯信道）+纯噪声信道–发射信号等功率分配。进一步简化运算：不对HH‘进行奇异值分解，直接带入运算，矩阵运算可以帮助完成。</li>
+<li>MIMO可以看为香农公式从标量到矩阵的推广，香农公式考虑恒参信道–白噪声信道（不考虑时变衰减特性），MIMO信道需要考虑信道响应矩阵的特征。</li>
+<li>MIMO的容量本质上引入了一个系数n&#x3D;rank（H）&#x3D;min（r、t），随着mimo天线规模的增加，信道容量会线性增加</li>
+<li>以上推导在矩阵H给定的情况下进行，随机信道矩阵H–快衰落（每一个符号周期内，信道特性都会变化，可以求数学期望，得到遍历信道容量）、块衰落（信道一块一块变化）、长期信道衰落-慢衰落-准静态衰落（后两种求概率信道容量–中断容量，也叫截止容量：每一种衰落信道效应，考虑90%的可能现象，信道可能达到的最高吞吐率，也成为10%的截止容量，也可以理解为给定概率求出容量的上限，无法进行解析表达，需要进行montcalor仿真）</li>
+</ol>
+<h3 id="空时块编码STBC–获取发天线的分集"><a href="#空时块编码STBC–获取发天线的分集" class="headerlink" title="空时块编码STBC–获取发天线的分集"></a>空时块编码STBC–获取发天线的分集</h3><ol>
+<li>sapce time block code：依靠编码获得收发天线的分集增益，提高传输的可靠性。</li>
+<li>Alamoutic STBC编码方式：两发的分集，发天线1和发天线2发送的信号内积为0–空间上正交，时刻t1两天线发的信号正交于时刻t2–实现空时正交，时间效率（编码码率、频带利用率）没有提升，但是实现了空间的分集（空间实现了增加），可靠性会增加。</li>
+<li>分集：分开独立的信号，再进行合并。独立–正交。</li>
+<li>STBC利用正交性简化了接受信号的处理，接收端进行最大似然检测MLD，使用单路的最大似然检测即可。</li>
+<li>推广到2发n收：对接收天线联合求和求解MLD。</li>
+<li>收发分集对应到差错概率的幂次数–分集数，可靠性会大幅度提升。发射天线总功率不变，因此可能单个天线的功率会有变化，但是分集增益不变。</li>
+<li>（1）OSTBC：3TX、4TX…此时，编码的码率小于1，达不到100%。（2）不牺牲效率，则叫做准正交的STBC。（3）非相干的解调：理想的信道估计不好获得，形成差分的STBC</li>
+</ol>
+<h3 id="分层时空码–多天线，空间复用"><a href="#分层时空码–多天线，空间复用" class="headerlink" title="分层时空码–多天线，空间复用"></a>分层时空码–多天线，空间复用</h3><ol>
+<li>STBC只能提高可靠性，分层时空码实现空间复用。</li>
+<li>垂直分层空时码VLST：串行数据分给n个天线发送，实现复用–迫零算法用于信号检测，sic串行干扰抵消：先检测能量最大的信号，判决后重建该信号对其他信号的干扰，信道维度减小，以此类推，2发2收性能&lt;4收…，收分集增益提高传输的可靠性</li>
+<li>QR检测算法：把H矩阵进行QR分解，酉矩阵+上三角矩阵，上三角矩阵从下面元素进行迭代求解，但是可能存在错误传播的现象，球译码算法需要进行QR分解。</li>
+<li>MMSE求解算法：类似于均衡，目的不是完全抑制干扰，而是达到抗干扰抗噪声的平衡，类似于QR进行迭代求解能量从强到弱的信号（采用最优的顺序）。</li>
+</ol>
+<h3 id="空时格码STTC–分集编码联合优化"><a href="#空时格码STTC–分集编码联合优化" class="headerlink" title="空时格码STTC–分集编码联合优化"></a>空时格码STTC–分集编码联合优化</h3><ol>
+<li>sapce time trsllis code：信道编码+mimo进行联合优化，获得编码增益、分集增益</li>
+<li>联合优化信道编码、调制、收发分集，联合优化对应技术就是分离优化技术–分离优化（各个模块分别进行优化）</li>
+<li>分离定理：无记忆、广义平稳遍历的信源，无记忆、广义平稳遍历的信道，这样的条件下分离优化，码长无限长可以达到最优的效果。</li>
+<li>语音、图像非平稳、非遍历，或者短时平稳遍历的，信道往往是时变的，非平稳，因此不满足分离定理。</li>
+<li>联合优化设计会非常困难，但不是不可实现。（1）TCM：格码调制，卷积码编码、星座调制联合设计来逼近信道容量极限。（2）STTC：联合优化信道编码、调制、多天线发送。编码后SP，进行多维空间的映射，看成广义的空时编码技术</li>
+<li>STTC：主体内容为寄存器阵列，每个支路有抽头对应的生成多项式，输出映射到多个天线上，使用联合MLD进行检测（1）行列式准则（2）秩准则–两个准则针对<strong>准静态、块衰落信道</strong>。成对差错概率和天线的收分集增益和编码矩阵的秩有关、和信号矩阵的差矩阵的行列式有关，已形成最佳的空时格码。</li>
+<li>快衰落信道简化为欧氏距离准则、乘积准则。</li>
+<li>sttc中2发2收的性能为四重分集的性能增益，编码增益也很客观，但是算法复杂度较高。</li>
+</ol>
+<h3 id="空时预编码–发端波束成形"><a href="#空时预编码–发端波束成形" class="headerlink" title="空时预编码–发端波束成形"></a>空时预编码–发端波束成形</h3><ol>
+<li>precoding和波束成形的区别：本质上发送端乘加权系数，区别–（1）precoding隐含发射端天线的间距充分大，大于10被波长；波束成形早期认为天线阵元之间存在相关性，要求间距为1&#x2F;2波长，现在要求减小，阵元独立去做系数加权也可以认为是波束成形（2）precoding有显示的码本，接收端已经知道。发送端*隐式的码本，就是波束成形技术。下面不严格区分</li>
+<li>乘以码本，相当于对信道进行改造，比如对H做奇异值分解得到的酉矩阵作为码本，即可得到增益，中高信噪比具有显著的性能提升</li>
+<li>分类：（1）线性预编码：空时编码后乘线性预编码矩阵，接受进行线性检测。反向信道进行信道估计（CQI–信噪比的量化版本、RI–信道响应矩阵的秩的特性、PMI–H在高维空间的投影–码本序号），反馈给发送端用于波束成形&#x2F;码本选择（2）非线性预编码：THP预编码方法–预均衡对偶的方法DFE，借鉴到MIMO得到THP，不在收端进行SIC，而是变化到发端，消除空间天线间的干扰。THP的关键约束，必须知道信道的状态信息</li>
+<li>线性预编码设计发送、接受矩阵，这类问题归结为优化问题–凸优化理论，求解结果需要采用优化软件才能算出最后的结果，优化后等效的最优结构：预编码矩阵–无干扰信道，检测矩阵–对应，基本思路就是奇异值分解，消除天线间得相互干扰。</li>
+<li>码本构造：矢量量化VQ、GRASSMAN线封装方法。（1）矢量量化来自于信源编码，用于对信道相应矩阵进行量化，信道量化为各个码本（2）线封装：微分几何研究信道的特点。</li>
+<li>4、5G的码本构造考虑工程的使用性，只应用简单的矩阵变换进行码本构造</li>
+<li>多用户mimo–多天线用户包含多个，构成大的虚拟的mimo。单用户mimo–一个移动台和一个基站构成SU MIMO。下行多用户mimo–小区广播的多用户mimo，用户维度增加，增加一个用户增益。</li>
+<li>多用户MIMO的容量正比于基站的天线数量，容量逐渐变大，MU-mimo使用脏纸编码，用户间不受空间的限制，容量不会缩减，一种典型的广播编码技术。</li>
+</ol>
+<h3 id="MIMO技术在宽带移动通信系统的应用"><a href="#MIMO技术在宽带移动通信系统的应用" class="headerlink" title="MIMO技术在宽带移动通信系统的应用"></a>MIMO技术在宽带移动通信系统的应用</h3><ol>
+<li>3G综合使用分集、复用、预编码技术。主要用开环技术–发分集（高速移动场景下提高可靠性），闭环技术–预编码技术（低速环境下提高链路的吞吐率）。（1）分集技术：空时发分集技术STTD（STBC）、正交发分集、空时扩频、发送分集等等。开环：直接从发端发送信号（2）闭环技术：预编码技术，信道反馈后调整发端预编码矩阵，构成闭环。</li>
+<li>LTE系统分为：分集、复用、预编码。（1）分集技术：MIMO-OFDM系统，空频域处理信号，也可以进行Alamoutic STBC编码（2）波束成形技术：闭环预编码的模式、基于UE专用RS进行波束赋形（TDD-LTE）（3）空间复用技术–预编码（基于码本提高系统的吞吐率）、CDD技术–人为引入时延，在时间上进行分离（高速场景下使用）</li>
+</ol>
+<h2 id="chapter12-链路自适应技术"><a href="#chapter12-链路自适应技术" class="headerlink" title="chapter12 链路自适应技术"></a>chapter12 链路自适应技术</h2><p>###引言</p>
+<ol>
+<li>链路自适应技术：3G技术中代表技术–自适应，适应无线信道动态变换–时变特征</li>
+<li>信道本身特性：（1）慢时变性–慢阴影衰落、空间上的慢平坦衰落（2）传输环境本身存在差异–远近效应，下行角效应</li>
+<li>链路自适应技术：功率自适应、速率自适应</li>
+<li>功率–调整发射信号的功率，速率–调整编码调制的速率</li>
+<li>FDD双工：输入TX到输出RX的主链路，RX到TX称为反馈链路，两条链路工作在不同频段。TX到RX的AMC–自适应调制编码、自适应调整功率。接收机一段提取出导频进行信道估计反馈给发送端（反馈CQI–SINR，PMI&#x2F;RI–信道响应在空间的时变（MIMO中的码本序号和流标识）），发送端利用算法自适应调整速率、功率。</li>
+<li>TDD双工：不需要反馈链路</li>
+</ol>
+<h3 id="多功率控制原理-amp-功率控制在移动通信中的应用"><a href="#多功率控制原理-amp-功率控制在移动通信中的应用" class="headerlink" title="多功率控制原理&amp;功率控制在移动通信中的应用"></a>多功率控制原理&amp;功率控制在移动通信中的应用</h3><ol>
+<li>早期的功率控制用于对实时性话音业务的控制：CDMA中IS-95（2G）克服阴影效应导致的慢衰落、克服多径传播和空间选择性衰落引入的快衰落、克服上行链路的远近效应、克服下行链路的角效应（克服信道的时变、地理环境的差异，保证话音业务的质量）</li>
+<li>控制准则：（1）功率平衡（基站接收端接受信号的功率）（2）信号干扰比SIR平衡准则（为了引入接收端接受信号的闭环性）（3）功率平衡和SIR平衡混合体制（实用性+收敛更快）（4）误码率BER平衡准则</li>
+<li>具体实施方法（从方法上看–开环、闭环、外环功率控制）：（1）下行链路功率控制（2）上行链路功率控制</li>
+<li>开环：上行链路移动台发送功率Pt，基站接受功率Pr，移动台接受信号P，根据P来设定Pt，工作在频分双工的系统上–只能进行粗略调整，相互独立的发送功率，补偿阴影效应的范围大</li>
+<li>闭环：上行链路移动台发送功率Pt，基站接受功率Pr，Pr低于目标值，意味着链路质量差，基站测通过下行链路发送功率控制指令，进行一个增量补偿，Pr高于目标值，通知移动台减少发送功率</li>
+<li>闭环分为外环–目标值、内环–增量调整。IS-95中的功率控制–开环功率+-32db，闭环功率控制–800HZ一个周期，20ms语音帧，1.25ms控制一次，范围为+-24db。外环–接收信号做相关（CDMA），做哈达玛变化（上行没有导频，进行非相干解调，使用哈达玛变化非相干解调），译码，速率判决、设定外环功率的门限值。内环进行信道估计，测量得到随时SIR，与目标SIR比较，进行功率控制指令设定–2bit即可（公共bit），编码，调制，给到移动台。</li>
+<li>WCDMA的功率控制：（1）调整频率1.5KHZ，对信道时变的跟踪更快，链路补偿更及时；（2）功率增量补偿可以进行调整0.5，1，2db–适应效果更好；（3）移动台运动，切换基站是检测两个基站的功率，CDMA系统检测两个信号–需要两个虚拟的接收机，IS95两个基站的码字不一样，PN1、PN2–同一个m序列的不同相位来构成，一套接收机对准不同相位进行接受，WCDMA使用完全不同的Gold码，用时间换成本，采用压缩传输，原来256个时隙使用128时隙传输，剩下的时间测量另外个基站的信号，分时复用</li>
+</ol>
+<h3 id="无线资源的最优分配"><a href="#无线资源的最优分配" class="headerlink" title="无线资源的最优分配"></a>无线资源的最优分配</h3><ol>
+<li>功率控制的目的是使得接受两路信号拉到同一个水平，不是最佳的方案</li>
+<li>无线资源：能量资源、时间资源、频率资源、空间资源massive-mimo</li>
+<li>统一的方法–注水定理：信道限时限频，进行信号功率分配，在有效带宽内形成一个水平面–有约束的极值问题</li>
+<li>注水定理应用：（1）多载波信道下的最优功率分配–连续载波的简化（2）多用户之间进行<strong>功率分配</strong>–多用户分集（3、4、5G的数据业务传输，不能用于实时的话音业务），基站多址接入信道得到的功率最大，将用户链路看成一个子信道，使得系统容量达到最优，和功率控制的结果完全相反</li>
+</ol>
+<h3 id="速率自适应"><a href="#速率自适应" class="headerlink" title="速率自适应"></a>速率自适应</h3><ol>
+<li>WCDMA–专用信道，HSDPA–高速共享信道，HSDPA采用自适应编码调制技术，采用多码传输（不只是支持一个码道），采用快速的HARQ技术，因此比WCDMA更加高速。</li>
+<li>HSDPA的自适应调制、自适应编码（Turbo编码+码率自适应模块）、多码道传输。下行最高10.7Mbps</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>感谢阅读！.</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.jpg" alt="XuJie_BUPT 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.jpg" alt="XuJie_BUPT 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>XuJie_BUPT
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://xj-bupt.top/2023/02/15/%E3%80%8A%E7%A7%BB%E5%8A%A8%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86%E3%80%8B%E7%9F%A5%E8%AF%86%E5%9B%9E%E9%A1%BE--part2/" title="《移动通信原理》知识总结--part2">http://xj-bupt.top/2023/02/15/《移动通信原理》知识回顾--part2/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%A7%BB%E5%8A%A8%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/" rel="tag"># 移动通信原理</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/02/15/%E3%80%8A%E7%A7%BB%E5%8A%A8%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86%E3%80%8B%E7%9F%A5%E8%AF%86%E5%9B%9E%E9%A1%BE--part3/" rel="prev" title="《移动通信原理》知识总结--part3">
+      <i class="fa fa-chevron-left"></i> 《移动通信原理》知识总结--part3
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#chapter6-%E8%B0%83%E5%88%B6%E7%90%86%E8%AE%BA"><span class="nav-number">1.</span> <span class="nav-text">chapter6 调制理论</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A7%BB%E5%8A%A8%E9%80%9A%E4%BF%A1%E7%B3%BB%E7%BB%9F%E7%9A%84%E7%89%A9%E7%90%86%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.1.</span> <span class="nav-text">移动通信系统的物理模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B0%83%E5%88%B6%E8%A7%A3%E8%B0%83%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F%E8%83%BD%E4%B8%8E%E8%A6%81%E6%B1%82"><span class="nav-number">1.2.</span> <span class="nav-text">调制解调的基本功能与要求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MSK-x2F-GMSK%E8%B0%83%E5%88%B6%E2%80%93GSM%E5%88%B6%E5%BC%8F"><span class="nav-number">1.3.</span> <span class="nav-text">MSK&#x2F;GMSK调制–GSM制式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%CE%A0-x2F-4-DQPSK%E8%B0%83%E5%88%B6%E2%80%93PDC%E3%80%81IS-54-TDMA%E3%80%81PHS%E5%88%B6%E5%BC%8F%EF%BC%882000%E5%B9%B4%E2%80%93%E5%B0%8F%E7%81%B5%E9%80%9A%EF%BC%89"><span class="nav-number">1.4.</span> <span class="nav-text">Π&#x2F;4-DQPSK调制–PDC、IS-54 TDMA、PHS制式（2000年–小灵通）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%CE%A0-x2F-8-8PSK%E8%B0%83%E5%88%B6%EF%BC%882-75G%E7%B3%BB%E7%BB%9F%E2%80%93GSM%E3%80%81GPLS%E7%9A%84%E5%A2%9E%E5%BC%BA%EF%BC%89"><span class="nav-number">1.5.</span> <span class="nav-text">3Π&#x2F;8-8PSK调制（2.75G系统–GSM、GPLS的增强）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%A8%E4%BA%8ECDMA%E7%9A%84%E8%B0%83%E5%88%B6%EF%BC%883G%E7%B3%BB%E7%BB%9F%EF%BC%89"><span class="nav-number">1.6.</span> <span class="nav-text">用于CDMA的调制（3G系统）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MQAM%E8%B0%83%E5%88%B6%EF%BC%884G%E7%B3%BB%E7%BB%9F%E4%B8%ADLTE%E3%80%81802-11n%E3%80%81WiMax%EF%BC%89"><span class="nav-number">1.7.</span> <span class="nav-text">MQAM调制（4G系统中LTE、802.11n、WiMax）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#chapter7-%E4%BF%A1%E9%81%93%E7%BC%96%E7%A0%81"><span class="nav-number">2.</span> <span class="nav-text">chapter7 信道编码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%A1%E9%81%93%E7%BC%96%E7%A0%81%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-number">2.1.</span> <span class="nav-text">信道编码的基本概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%BF%E6%80%A7%E5%88%86%E7%BB%84%E7%A0%81"><span class="nav-number">2.2.</span> <span class="nav-text">线性分组码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%B7%E7%A7%AF%E7%A0%81%E2%80%93%E7%A6%BB%E6%95%A3%E7%BA%BF%E6%80%A7%E6%97%B6%E4%B8%8D%E5%8F%98%E7%B3%BB%E7%BB%9F"><span class="nav-number">2.3.</span> <span class="nav-text">卷积码–离散线性时不变系统</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%A7%E8%81%94%E7%A0%81"><span class="nav-number">2.4.</span> <span class="nav-text">级联码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Turbo%E7%A0%81"><span class="nav-number">2.5.</span> <span class="nav-text">Turbo码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%A4%E7%BB%87%E7%BC%96%E7%A0%81"><span class="nav-number">2.6.</span> <span class="nav-text">交织编码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ARQ%E5%92%8CHARQ%E7%AE%80%E4%BB%8B"><span class="nav-number">2.7.</span> <span class="nav-text">ARQ和HARQ简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%A1%E9%81%93%E7%BC%96%E7%A0%81%E7%90%86%E8%AE%BA%E4%B8%8A%E7%9A%84%E6%BD%9C%E5%9C%A8%E8%83%BD%E5%8A%9B%E4%B8%8E%E6%9C%80%E5%A4%A7%E7%BC%96%E7%A0%81%E5%A2%9E%E7%9B%8A"><span class="nav-number">2.8.</span> <span class="nav-text">信道编码理论上的潜在能力与最大编码增益</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GSM%E7%B3%BB%E7%BB%9F%E7%9A%84channel-coding"><span class="nav-number">2.9.</span> <span class="nav-text">GSM系统的channel coding</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IS95%E7%B3%BB%E7%BB%9F%E7%9A%84channel-coding"><span class="nav-number">2.10.</span> <span class="nav-text">IS95系统的channel coding</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CDMA2000%E7%B3%BB%E7%BB%9F%E7%9A%84channel-coding"><span class="nav-number">2.11.</span> <span class="nav-text">CDMA2000系统的channel coding</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#WCDMA%E7%B3%BB%E7%BB%9F%E7%9A%84channel-coding"><span class="nav-number">2.12.</span> <span class="nav-text">WCDMA系统的channel coding</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#chapter8-%E5%88%86%E9%9B%86%E5%92%8C%E5%9D%87%E8%A1%A1"><span class="nav-number">3.</span> <span class="nav-text">chapter8 分集和均衡</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E9%9B%86%E6%8A%80%E6%9C%AF%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86"><span class="nav-number">3.1.</span> <span class="nav-text">分集技术的基本原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RAKE%E6%8E%A5%E5%8F%97%E4%B8%8E%E5%A4%9A%E5%BE%84%E5%88%86%E9%9B%86"><span class="nav-number">3.2.</span> <span class="nav-text">RAKE接受与多径分集</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9D%87%E8%A1%A1%E6%8A%80%E6%9C%AF"><span class="nav-number">3.3.</span> <span class="nav-text">均衡技术</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A2%9E%E5%BC%BA%E6%8A%80%E6%9C%AF%E4%B8%8E%E5%BA%94%E7%94%A8"><span class="nav-number">3.4.</span> <span class="nav-text">增强技术与应用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#chapter9-%E5%A4%9A%E7%94%A8%E6%88%B7%E6%A3%80%E6%B5%8B%E6%8A%80%E6%9C%AF"><span class="nav-number">4.</span> <span class="nav-text">chapter9 多用户检测技术</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E7%94%A8%E6%88%B7%E6%A3%80%E6%B5%8B%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86"><span class="nav-number">4.1.</span> <span class="nav-text">多用户检测的基本原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%80%E4%BC%98%E5%A4%9A%E7%94%A8%E6%88%B7%E6%A3%80%E6%B5%8B%E6%8A%80%E6%9C%AF"><span class="nav-number">4.2.</span> <span class="nav-text">最优多用户检测技术</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%BF%E6%80%A7%E5%A4%9A%E7%94%A8%E6%88%B7%E6%A3%80%E6%B5%8B%E6%8A%80%E6%9C%AF%E2%80%93%E5%B7%A5%E7%A8%8B"><span class="nav-number">4.3.</span> <span class="nav-text">线性多用户检测技术–工程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B9%B2%E6%89%B0%E6%B6%88%E9%99%A4%E5%A4%9A%E7%94%A8%E6%88%B7%E6%A3%80%E6%B5%8B%E5%99%A8%E2%80%93%E5%B7%A5%E7%A8%8B"><span class="nav-number">4.4.</span> <span class="nav-text">干扰消除多用户检测器–工程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#chapter10-OFDM%E6%8A%80%E6%9C%AF%E2%80%93%E6%AD%A3%E4%BA%A4%E9%A2%91%E5%88%86%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8"><span class="nav-number">5.</span> <span class="nav-text">chapter10 OFDM技术–正交频分多路复用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#OFDM%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86"><span class="nav-number">5.1.</span> <span class="nav-text">OFDM基本原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#OFDM%E4%B8%AD%E7%9A%84%E4%BF%A1%E9%81%93%E4%BC%B0%E8%AE%A1"><span class="nav-number">5.2.</span> <span class="nav-text">OFDM中的信道估计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#OFDM%E7%9A%84%E5%90%8C%E6%AD%A5%E6%8A%80%E6%9C%AF"><span class="nav-number">5.3.</span> <span class="nav-text">OFDM的同步技术</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PARP%E6%8A%91%E5%88%B6"><span class="nav-number">5.4.</span> <span class="nav-text">PARP抑制</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#chapter11-MIMO%E7%A9%BA%E6%97%B6%E5%A4%84%E7%90%86%E6%8A%80%E6%9C%AF"><span class="nav-number">6.</span> <span class="nav-text">chapter11 MIMO空时处理技术</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E5%A4%A9%E7%BA%BF%E4%BF%A1%E6%81%AF%E8%AE%BA%E7%AE%80%E4%BB%8B"><span class="nav-number">6.1.</span> <span class="nav-text">多天线信息论简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A9%BA%E6%97%B6%E5%9D%97%E7%BC%96%E7%A0%81STBC%E2%80%93%E8%8E%B7%E5%8F%96%E5%8F%91%E5%A4%A9%E7%BA%BF%E7%9A%84%E5%88%86%E9%9B%86"><span class="nav-number">6.2.</span> <span class="nav-text">空时块编码STBC–获取发天线的分集</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E5%B1%82%E6%97%B6%E7%A9%BA%E7%A0%81%E2%80%93%E5%A4%9A%E5%A4%A9%E7%BA%BF%EF%BC%8C%E7%A9%BA%E9%97%B4%E5%A4%8D%E7%94%A8"><span class="nav-number">6.3.</span> <span class="nav-text">分层时空码–多天线，空间复用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A9%BA%E6%97%B6%E6%A0%BC%E7%A0%81STTC%E2%80%93%E5%88%86%E9%9B%86%E7%BC%96%E7%A0%81%E8%81%94%E5%90%88%E4%BC%98%E5%8C%96"><span class="nav-number">6.4.</span> <span class="nav-text">空时格码STTC–分集编码联合优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A9%BA%E6%97%B6%E9%A2%84%E7%BC%96%E7%A0%81%E2%80%93%E5%8F%91%E7%AB%AF%E6%B3%A2%E6%9D%9F%E6%88%90%E5%BD%A2"><span class="nav-number">6.5.</span> <span class="nav-text">空时预编码–发端波束成形</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MIMO%E6%8A%80%E6%9C%AF%E5%9C%A8%E5%AE%BD%E5%B8%A6%E7%A7%BB%E5%8A%A8%E9%80%9A%E4%BF%A1%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%BA%94%E7%94%A8"><span class="nav-number">6.6.</span> <span class="nav-text">MIMO技术在宽带移动通信系统的应用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#chapter12-%E9%93%BE%E8%B7%AF%E8%87%AA%E9%80%82%E5%BA%94%E6%8A%80%E6%9C%AF"><span class="nav-number">7.</span> <span class="nav-text">chapter12 链路自适应技术</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E5%8A%9F%E7%8E%87%E6%8E%A7%E5%88%B6%E5%8E%9F%E7%90%86-amp-%E5%8A%9F%E7%8E%87%E6%8E%A7%E5%88%B6%E5%9C%A8%E7%A7%BB%E5%8A%A8%E9%80%9A%E4%BF%A1%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8"><span class="nav-number">7.1.</span> <span class="nav-text">多功率控制原理&amp;功率控制在移动通信中的应用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%A0%E7%BA%BF%E8%B5%84%E6%BA%90%E7%9A%84%E6%9C%80%E4%BC%98%E5%88%86%E9%85%8D"><span class="nav-number">7.2.</span> <span class="nav-text">无线资源的最优分配</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9F%E7%8E%87%E8%87%AA%E9%80%82%E5%BA%94"><span class="nav-number">7.3.</span> <span class="nav-text">速率自适应</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="XuJie_BUPT"
+      src="/images/tracer.jpg">
+  <p class="site-author-name" itemprop="name">XuJie_BUPT</p>
+  <div class="site-description" itemprop="description">希望自己摆脱身上的冷气，尽力发光发热</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/tracerXJ" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;tracerXJ" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/about/" title="E-Mail → &#x2F;about&#x2F;"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/images/weixinid.jpg" title="Weixin → &#x2F;images&#x2F;weixinid.jpg"><i class="fab fa-weixin fa-fw"></i>Weixin</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2023-1-19 – 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">XuJie_BUPT</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">101k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">1:32</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

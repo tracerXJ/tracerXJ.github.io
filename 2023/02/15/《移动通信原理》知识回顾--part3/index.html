@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"xj-bupt.top","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="chapter13 B3G与4G移动通信系统标准化进程 标准制定需要10-15年的时间，目前两类组织ITU–全球通信标准负责宏观的标准，具体标准制定由3GPP、3GPP2、IEEE来进行制定 3G的标准IMT-2000，4G为IMT-advance。 3G标准方法WCDMA（FDD）、CDMA-2000（FDD）、TDD-CDMA、WIMAX-TDD四个标准被使用 4G标准LTE、802.16m、">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《移动通信原理》知识总结--part3">
+<meta property="og:url" content="http://xj-bupt.top/2023/02/15/%E3%80%8A%E7%A7%BB%E5%8A%A8%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86%E3%80%8B%E7%9F%A5%E8%AF%86%E5%9B%9E%E9%A1%BE--part3/index.html">
+<meta property="og:site_name" content="Life Record Blog">
+<meta property="og:description" content="chapter13 B3G与4G移动通信系统标准化进程 标准制定需要10-15年的时间，目前两类组织ITU–全球通信标准负责宏观的标准，具体标准制定由3GPP、3GPP2、IEEE来进行制定 3G的标准IMT-2000，4G为IMT-advance。 3G标准方法WCDMA（FDD）、CDMA-2000（FDD）、TDD-CDMA、WIMAX-TDD四个标准被使用 4G标准LTE、802.16m、">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-02-15T09:40:27.014Z">
+<meta property="article:modified_time" content="2023-02-15T09:39:49.775Z">
+<meta property="article:author" content="XuJie_BUPT">
+<meta property="article:tag" content="移动通信原理">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://xj-bupt.top/2023/02/15/%E3%80%8A%E7%A7%BB%E5%8A%A8%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86%E3%80%8B%E7%9F%A5%E8%AF%86%E5%9B%9E%E9%A1%BE--part3/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>《移动通信原理》知识总结--part3 | Life Record Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/rss2.xml" title="Life Record Blog" type="application/rss+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Life Record Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">生活记录博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xj-bupt.top/2023/02/15/%E3%80%8A%E7%A7%BB%E5%8A%A8%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86%E3%80%8B%E7%9F%A5%E8%AF%86%E5%9B%9E%E9%A1%BE--part3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/tracer.jpg">
+      <meta itemprop="name" content="XuJie_BUPT">
+      <meta itemprop="description" content="希望自己摆脱身上的冷气，尽力发光发热">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Life Record Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          《移动通信原理》知识总结--part3
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2023-02-15 17:40:27 / 修改时间：17:39:49" itemprop="dateCreated datePublished" datetime="2023-02-15T17:40:27+08:00">2023-02-15</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%A7%BB%E5%8A%A8%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">移动通信原理</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>6.5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>6 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="chapter13-B3G与4G移动通信系统"><a href="#chapter13-B3G与4G移动通信系统" class="headerlink" title="chapter13 B3G与4G移动通信系统"></a>chapter13 B3G与4G移动通信系统</h2><h3 id="标准化进程"><a href="#标准化进程" class="headerlink" title="标准化进程"></a>标准化进程</h3><ol>
+<li>标准制定需要10-15年的时间，目前两类组织ITU–全球通信标准负责宏观的标准，具体标准制定由3GPP、3GPP2、IEEE来进行制定</li>
+<li>3G的标准IMT-2000，4G为IMT-advance。</li>
+<li>3G标准方法WCDMA（FDD）、CDMA-2000（FDD）、TDD-CDMA、WIMAX-TDD四个标准被使用</li>
+<li>4G标准LTE、802.16m、UMB三大标准，但没有全部演进，LTE成为主流，TDD、FDD两种方式</li>
+<li>5G的统一标准只有一种</li>
+<li>标准制定（1）3GPP划分4个任务组，物理层–ran（无线接入网，设定5个工作组，1为物理层），R11从5G开始（2）3GPP2和3GPP类似，主要维护CDMA2000和演进的标准（3）IEEE各种工作组制定各种标准，802.XXX制定</li>
+</ol>
+<h3 id="HSDPA系统-wcdma增强"><a href="#HSDPA系统-wcdma增强" class="headerlink" title="HSDPA系统-wcdma增强"></a>HSDPA系统-wcdma增强</h3><ol>
+<li>wcdma叫做utra-fdd，td-scdma叫做utra-tdd</li>
+<li>wcdma–turbo+交织，扩频因子可以变化–ovsf码，信道结构：逻辑信道-传输信道-物理信道。物理信道分为上下行，功能分为专用、公用。1帧–10ms，划分为15个时隙，数据和控制采用码分来进行区分。传输信道：专用、共用传输信道。</li>
+<li>hsdpa是对wcdma的下行增强：（1）高阶调制64qam、32qam（2）速率控制（3）分组调度–选择信道质量好的用户主要传输，提高系统的吞吐率（4）快速harq–多停等。发送时间间隔进行优化为2ms，更快的适应信道特征。</li>
+<li>hsdpa支持5、10、15码道，引入了基本信道–下行高速业务、信令。支持时分、码分共同调度。</li>
+<li>hsupa对上行链路进行增强–资源共享、调度信息传输、功率控制、软切换、无需高阶调制、同步harq技术（简化重传技术，固定时间点进行数据重传），hsdpa对下行链路进行增强</li>
+<li>hsdpa调度–提高吞吐量，兼顾质量、公平性</li>
+<li>hsupa–为了让干扰最小，将干扰看作资源，通过调度的方式让话音、数据业务正常工作</li>
+<li>hspa系统是对上下行的进一步增强–mbms：多媒体业务的广播，提高接受用户的质量，mbms采用（1）宏分集–合并多小区的信号（2）<strong>时间分集–喷泉码：专用于广播场景，小区边缘一个数据包无法接受，NACK给基站，基站重新发送会导致效率浪费，广播不适用harq，使用可变速率编码的方式，信道差的用户多接收数据实现接受，最代表raptor code–3G标准使用</strong>（3）空时发分集–多天线正交发收分集</li>
+<li>hspa+引入多天线：2*2mimo，上行链路28Mbps，下行11.5Mbps；在节能上也有所改进–不连续发送技术CPC、不连续接受单元（不持续接受数据）、HS-SCCH精简指令（小数据包进行简化）。</li>
+</ol>
+<h3 id="EVDO系统"><a href="#EVDO系统" class="headerlink" title="EVDO系统"></a>EVDO系统</h3><ol>
+<li>类似于HSPA，CDMA2000的增强</li>
+<li>evdo采用共享信道发送（时分）、调度机制、缩短TTI、速率控制、高阶调制HARQ、软切换、接受分集</li>
+</ol>
+<h3 id="LTE系统"><a href="#LTE系统" class="headerlink" title="LTE系统"></a>LTE系统</h3><ol>
+<li>下行采用OFDMA多址，上行采用SC-FDMA单载波频分多址（上行子载波连续分配，papr比较小，适用于移动终端）</li>
+<li>fdd帧10ms，tdd分为10个子帧–两个切换点，特殊指针–下行导频、上行导频信息，上下行数据信息、空闲时隙</li>
+<li>LTE内部结构：（1）1个子帧&#x3D;2个时隙：0.5ms一个时隙，循环前缀–普通cp，0.5ms有7个ofdm符号，cp持续时间5us–典型的城区环境（2）扩展cp，cp长度长，6个ofdm符号，只用于大的小区覆盖，多径时延比较大（3）cp更长，卫星覆盖</li>
+<li>LTE带宽可以灵活配置，自适应调制、信道编码。</li>
+<li>LTE时频结构（1）横轴代表一个ofdm符号持续时间，纵轴就是一个子载波，规定一个间隔15KHZ，一个符号持续时间66.7us，一个格子对应一个时频单元（2）资源块RB-resource block，横轴7个符号–0.5ms，纵轴12个子载波–180KHZ，84个物理资源</li>
+<li>LTE多址接入方式：基站ofdma，数据资源承载在频域，上行sc-fdma：资源映射前引入了DTF变换，数据承载在时域–无线发送的时域信号</li>
+<li>LTE协议栈：只保留四层物理层、mac层–自适应编码调制控制、mac包排队调度复用，llc–数据包分割合并和arq，pdcp–数据包包头压缩，加密解密</li>
+<li>LTE信道划分为物理、传输、逻辑三种。物理：下行共享信道、广播信道、下行控制信道等等。</li>
+<li>LTE关键技术：HSPA关键技术的扩展，下行链路结构–数据、参考信号–QPSK复信号序列。参考型号时分的方式插入到参考信号（LTE符号间隔5个符号周期，频率间隔6个载波，这样设计具有最优性）。慢调频的方式获得频率分集增益。</li>
+<li>LTE物理层处理：小区搜素–168各小区，各个小区3个扇区，小区编号承载到物理信号，通过两个序列搜索建立移动台与基站的关系；之后继续随机接入，需要移动台、基站、基站控制器同步完成整个流程。时间调整–移动台到基站距离远近不一样，时延不一样，发端即使已经对齐，但是同步依然存在，所以要求基站发送同步信令。</li>
+<li>CAZAC–恒包络序列</li>
+</ol>
+<h2 id="chapter14-TDD移动通信系统"><a href="#chapter14-TDD移动通信系统" class="headerlink" title="chapter14 TDD移动通信系统"></a>chapter14 TDD移动通信系统</h2><h3 id="TDD原理"><a href="#TDD原理" class="headerlink" title="TDD原理"></a>TDD原理</h3><ol>
+<li>依靠时间区分上下行，（1）fdd依靠<strong>合路器</strong>完成上下行，（2）tdd基带产生信号后进行上变频，之后进行带通滤波，再进行功率放大，天线的信号的合并处理<strong>使用开关</strong>完成，开关是模拟器件，依靠不同时间段进行控制，器件成本小</li>
+<li>TDD追溯到2G时代–GSS小灵通，3G-TD-SCDMA，4G TD-LTE等等</li>
+<li>TDD技术特点：（1）<strong>信道互易性</strong>，工作频段是相同的，所以上下行链路经过信道的变化是一样的，上下行链路具有对称性，插入一个导频进行估计（小于相干带宽即可），单链路理想情况有这个特征。理论上要求信道线性时变，信道互易才成立，其次在延时性有要求：信道估计和预测时间小于相干时间，相干时间长的信道才可以满足这个特点，相干时间依赖于多普勒频移，需要在<strong>低速运动的场景</strong>才可以满足，高速场景下TDD不太适用（2）对于<strong>非对称业务可以适配</strong>，下行链路速率高，上行链路速率小，–数据业务具有很好的应用模式（3）非常要求同步的关系–小区用户之间的同步（用户之间考虑时间补偿）、小区间同步。<strong>必须在上下行时间引入保护时间</strong>–因此信号是<strong>突发式的，类似于脉冲</strong>，会对电器产生伤害，确保上下行切换，必须<strong>保证严格同步</strong>，基站受到的用户信号必须严格对齐–通过反馈信令发送调整的指令（4）TDD相对于FDD受到的干扰会更大，主要由于同步误差引起，上下行之间相互干扰–减少干扰措施–异频组网或者动态信道分配DCA（5）<strong>频谱利用率高</strong>，没有使用FDD的方式</li>
+</ol>
+<h3 id="TD-SCDMA"><a href="#TD-SCDMA" class="headerlink" title="TD-SCDMA"></a>TD-SCDMA</h3><ol>
+<li>TD–时分双工，S–同步、智能。–QPSK、8PSK、Turbo码，1900-1920MHz、2010-2025MHz、1880-1900MHZ、2.3-2.4GHz。</li>
+<li>物理信道帧结构：与WCDMA兼容，1帧10ms，2个子帧5ms</li>
+<li>引入两个上下行切换时间间隔点，帧格式是TD-SCDMA的主要知识产权</li>
+<li>智能天线技术——联合检测MU-MIMO，20年前叫做自适应阵列处理，因此智能天线就是波束成形技术。TD-SCDMA典型配置是8个阵元，采用简化的多用户检测算法。</li>
+<li>扩频技术–低码片速率1.28MCPS–LCR，相当于3.84M的CDMA小，所以是低码片速率</li>
+<li>功率控制–码字区分，时频重叠，但是需要功率控制</li>
+<li>网络层–接力切换：两个基站接力切换（2G为硬切换）</li>
+<li>DCA：动态信道分配：分配有限的时隙和码字，提高链路的吞吐率</li>
+<li>采用全IP、软交换的设备，网络层功能软件化</li>
+</ol>
+<h3 id="UTRA-TDD"><a href="#UTRA-TDD" class="headerlink" title="UTRA TDD"></a>UTRA TDD</h3><ol>
+<li>TS-SCDMA的增强，来自于3G的标准，宽带的TD–3.84Mcps的码片速率，R7版本引入7.68MCps的码片速率</li>
+</ol>
+<h3 id="TD-HSPA"><a href="#TD-HSPA" class="headerlink" title="TD-HSPA"></a>TD-HSPA</h3><ol>
+<li>TD-SCDMA增强，采用MIMO，更高阶的调制，连续分组连接CPC等</li>
+</ol>
+<h2 id="chapter15-移动网络的结构与组成"><a href="#chapter15-移动网络的结构与组成" class="headerlink" title="chapter15 移动网络的结构与组成"></a>chapter15 移动网络的结构与组成</h2><p>###移动网络的概念与特点</p>
+<ol>
+<li>移动网络：信令与协议、路由与交换、蜂窝式网络结构、移动通信的服务质量</li>
+<li>网络：终端设备、交互设备组成的复杂链接的系统；简单划分为硬件设备、软件的信令和协议</li>
+<li>移动通信网络主要的<strong>信令与协议</strong>：（1）通信信令–固定通信网络发展起来的，信令和业务一起，称为随路信令.（2）公共信道信令–CCS：七号信令，可以对照OSI七层模型，下三层MTP，上四层功能差不多。（3）<strong>信令与协议的控制：对等通信的收发实体之间进行虚拟的数据交互–信令设定的观点</strong>（4）TCP、IP协议可以看作OSI的四层协议（5）移动通信中高层需要加载移动应用协议–MAP协议</li>
+<li>网络中的<strong>交换路由机制</strong>：（1）电路交换–话音业务（2）分组交换–数据业务（面向连接ATM–发收通过数据包的方式进行过程中通信的路由不发生变化、虚连接TCP、IP–不是固定的连接，数据包走单独的路由，传输的路径不一样）</li>
+<li>移动通信网络的<strong>组网方式</strong>：蜂窝移动通信：（1）设计小区的形状：扩大覆盖、提高性能–正六边形蜂窝–减少重叠区域，有限的资源实现空间复用，构建小区群的结构–区群内小区数目a^2+ab+b^2（2）1G中7&#x2F;21：7代表小区的数目，21代表小区群的频点数，1G的FDMA的方式（3）GSM采用4&#x2F;12区群结构：4个小区，每个小区3个扇区–12个频带内（4）3G中采用码分复用，小区使用不同码字，频率利用率约等于1（5）4G中所有基站使用所有的频率，频率利用率等于1，相邻小区的干扰变大</li>
+<li>移动通信的业务质量QOSL衡量业务指标–业务支撑、便利性、完整性、实用性（1）话音业务端到端时延不超过150ms，误比特率1e-3（2）数据业务误比特率1e-5，6</li>
+</ol>
+<h3 id="从GSM-x2F-GPRS值WCDMA网络的演进"><a href="#从GSM-x2F-GPRS值WCDMA网络的演进" class="headerlink" title="从GSM&#x2F;GPRS值WCDMA网络的演进"></a>从GSM&#x2F;GPRS值WCDMA网络的演进</h3><ol>
+<li>GSM：GSM900-DSC1800。TDMA–帧结构：最重要的是时隙，时隙-帧-复帧-超帧</li>
+<li>GSM网络：移动台、基站子系统BSS、网络子系统MCS、操作维护中心子系统OSS。（1）移动台与基站之间的称为空中接口RI，依靠无线电波传输。移动台为子系统，包含各个终端设备。（2）BSS包含BTS基站收发信机、BSC基站控制器。（3）MSS主要的网元：移动交换中心MSC、网关GMSC–移动联通网络的交换、拜访位置寄存器VLR、寄存器管理单元HLR、AUC鉴权用户</li>
+<li>GSM中的接口：空中接口Um接口、接入网和核心网接口A接口、BSS内部接口Alis接口。Um接口完全标准化–设备、基站的互联。Alis接口没有标准化，运营商扩容会非常麻烦–绑定BTS、BSC。（1）Um接口移动台定义下三层的协议：无线控制、呼叫管理、寻呼管理。Bts与移动台、核心网控制进行对等通信（2）GPRS依附在GSM，支持分组业务功能：PCU–分组外传（接入网部分增加），核心网增加SGSN–分组路由、GGSN两个网元</li>
+<li>WCDMA：考虑与2G兼容–用户设备、无线接入网、移动核心网，处理时延减少（1）空口协议分层：分层+分面–用户面、控制面（2）与2G的演进步骤：分离的接入网、统一的核心网；进一步演进到全IP核心网，引入多媒体子系统IMS–承载与控制进行分离–纯粹软件化，网元都是软件化的功能</li>
+</ol>
+<h3 id="从IS95到CDMA网络的演进"><a href="#从IS95到CDMA网络的演进" class="headerlink" title="从IS95到CDMA网络的演进"></a>从IS95到CDMA网络的演进</h3><ol>
+<li>IS95类似GSM系统，CDMA2000类似于GPRS，分组数据业务使用TCP&#x2F;IP协议</li>
+<li>CDMA2000接口是成对的，接口对应于平面，WCDMA一个接口传输两个平面</li>
+</ol>
+<h3 id="B3G与4G移动通信网络"><a href="#B3G与4G移动通信网络" class="headerlink" title="B3G与4G移动通信网络"></a>B3G与4G移动通信网络</h3><ol>
+<li>总的趋势：扁平化、简单化</li>
+<li>LTE：UE、演化接入网、演化分组核心网。协议栈：用户平面、控制平面。</li>
+<li>网络互操作：2G、3G、4G、5G网络、WIFI–多制式，用户角度需要所有制式统一（1）紧耦合：一个网络的核心网作为主体，多个制式的接入网（2）松耦合：网络对等，通过中间网络进行交互，网络时延大，灵活性高</li>
+</ol>
+<h2 id="chapter16-移动网络运行"><a href="#chapter16-移动网络运行" class="headerlink" title="chapter16 移动网络运行"></a>chapter16 移动网络运行</h2><h3 id="移动通信中的业务类型"><a href="#移动通信中的业务类型" class="headerlink" title="移动通信中的业务类型"></a>移动通信中的业务类型</h3><ol>
+<li>话音、短信、网页、视频等等。</li>
+<li>2G GSM系统划分为端到端的业务（电信业务，面向用户）、不面向用户只面向设备的承载业务</li>
+<li>WCDMA业务：会话类业务、数据流业务、交互类业务、后台类业务–时延、差错概率（4G、5G仍然在使用）</li>
+</ol>
+<h3 id="呼叫建立与连接–移动通信网络协议处理的大头，非常复杂、庞杂"><a href="#呼叫建立与连接–移动通信网络协议处理的大头，非常复杂、庞杂" class="headerlink" title="呼叫建立与连接–移动通信网络协议处理的大头，非常复杂、庞杂"></a>呼叫建立与连接–移动通信网络协议处理的大头，非常复杂、庞杂</h3><ol>
+<li>移动台完成呼叫的过程：开机、移动台初始化（视频同步）、IDLE状态（接受控制信令），接入状态，业务信道服务状态。</li>
+<li>移动用户主叫GSM系统：移动终端、基站、移动交换中心、基站控制器（16个步骤）</li>
+<li>IS95、CDMA2000：MS、BTS各种信道交互承载信息</li>
+<li>基本的基站代码量达到百万行以上，基站控制器中心代码量达到千万以上</li>
+</ol>
+<h3 id="移动性管理"><a href="#移动性管理" class="headerlink" title="移动性管理"></a>移动性管理</h3><ol>
+<li>网络测检测用户坐标进行改变：（1）小区选择和位置登记–移动台开机需要经历的过程（2）越区切换–通信状态下进行小区的切换（3）小区重新选择和用户漫游–非本地业务的用户成为漫游用户</li>
+<li>位置登记：（1）位置更新（2）位置删除（3）周期性位置更新（4）基于IMSI进行位置更新—-方便网络监测用户的位置。用户的位置：中国的基站大约600w个，4G基站总共370W个，占世界比例2&#x2F;3，大陆用户11亿，网络侧需要高效的处理–一般把很多小区组成一个位置区，不超过范围不进行位置登记</li>
+<li>GSM中为硬切换：小区的不同扇区，不同小区切换，不同BSC切换，不同MSC切换（前面都是水平切换），不同网络切换（垂直切换）。切换过程：链路检测，确定目标小区，触发切换，执行切换</li>
+<li>切换：硬、软、无缝（接力切换）。（1）硬切换：切换为先断后连，必然有一个过渡状态–链路中断–GSM（2）软切换：切换过程中先建立新的再断开–CDMA2000、WCDMA、IS95等（激活集、候选集、相邻集、other集）–阈值TADD、T-DROP来控制四种集合</li>
+<li>（1）IS95软切换–高通公司，工程应用上有局限限，出现乒乓效应（阈值TADD、T-DROP固定）–话音业务频繁切换容易掉话（2）WCDMA使用可变的相对阈值–阈值跟随集合的值发生改变，激活集的数目为3，激活集已满，需要考虑替代候选对象–替代门限；切换执行不即时，有一个替代事件，来排除毛刺现象，解决乒乓效应</li>
+</ol>
+<h3 id="无线资源管理RRM"><a href="#无线资源管理RRM" class="headerlink" title="无线资源管理RRM"></a>无线资源管理RRM</h3><ol>
+<li>无线资源：能量、时间、频率、码、地理资源、空间资源、存储资源</li>
+<li>无线网络的基站：（1）主要功能：呼叫阶段控制CAC功能、排队机制、业务调度（速率&#x2F;功率控制）、输出指令（2）辅助功能：对无线资源进行估计、QOS业务需求分析估计</li>
+<li>分组调度算法：按结构安分（1）max c&#x2F;I载干比–排序，选择SIR大的服务，公平性差，吞吐量高（2）RR–人人有份，机会均等，公平性最强（3）PR算法–中庸，考虑信道条件、业务需求，兼顾公平性–比例公平调度算法</li>
+<li>MIMO-OFDM分组调度，考虑功率（链路自适应的注水方法）、用户（选择信道质量好的用户）、频率（多载波）、空间（多天线）、时间。步骤：基站：编码、交织、调制与映射、空时编码、子载波映射与分配、发送信号。移动台–用户进行FFT变换、子载波提取、信道估计、频域均衡、补偿、解调、译码的操作。</li>
+<li>资源分配问题就是满足各种约束条件的优化模型，可以采用匈牙利算法求最优解。</li>
+<li>功率自适应模型：可以转化为<strong>凸优化模型</strong>，第一个是功率自适应模型–发送功率最小化，第二个速率自适应，代价函数为合速率，第三个效用最大化模型–代价函数映射为效用函数</li>
+</ol>
+<h3 id="跨层优化"><a href="#跨层优化" class="headerlink" title="跨层优化"></a>跨层优化</h3><ol>
+<li>现代通信网络协议栈分层–OSI7层模型：处理复杂问题分层解决更加简单。</li>
+<li>信道、业务、网络、用户都是动态时变的，使用静态分层不是最优的。</li>
+<li>跨层–移动网络一般关注应用层、传输层、网络层、链路层：（1）跨层：层间进行处理–无线链路自适应（物理层+链路层）（2）移动性管理：网络层+链路层&#x2F;物理层（3）QOS：应用层+底层（4）安全性：应用（端到端）+传输+网络+链路层。提高网络处理的速率、整体性能</li>
+<li>跨层接口：（1）信息流可以上报给高层（2）业务的QOS可以传给底层（3）中间层之间进行交互（4）phy、mac可以合并（5）固定一些层，进行跨层耦合设计（6）参数校准通达整个层上</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>感谢阅读！.</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.jpg" alt="XuJie_BUPT 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.jpg" alt="XuJie_BUPT 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>XuJie_BUPT
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://xj-bupt.top/2023/02/15/%E3%80%8A%E7%A7%BB%E5%8A%A8%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86%E3%80%8B%E7%9F%A5%E8%AF%86%E5%9B%9E%E9%A1%BE--part3/" title="《移动通信原理》知识总结--part3">http://xj-bupt.top/2023/02/15/《移动通信原理》知识回顾--part3/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%A7%BB%E5%8A%A8%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/" rel="tag"># 移动通信原理</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/02/09/%E5%8A%9F%E8%BF%87%E5%BD%95/" rel="prev" title="功过录">
+      <i class="fa fa-chevron-left"></i> 功过录
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/02/15/%E3%80%8A%E7%A7%BB%E5%8A%A8%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86%E3%80%8B%E7%9F%A5%E8%AF%86%E5%9B%9E%E9%A1%BE--part2/" rel="next" title="《移动通信原理》知识总结--part2">
+      《移动通信原理》知识总结--part2 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#chapter13-B3G%E4%B8%8E4G%E7%A7%BB%E5%8A%A8%E9%80%9A%E4%BF%A1%E7%B3%BB%E7%BB%9F"><span class="nav-number">1.</span> <span class="nav-text">chapter13 B3G与4G移动通信系统</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%87%E5%87%86%E5%8C%96%E8%BF%9B%E7%A8%8B"><span class="nav-number">1.1.</span> <span class="nav-text">标准化进程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HSDPA%E7%B3%BB%E7%BB%9F-wcdma%E5%A2%9E%E5%BC%BA"><span class="nav-number">1.2.</span> <span class="nav-text">HSDPA系统-wcdma增强</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#EVDO%E7%B3%BB%E7%BB%9F"><span class="nav-number">1.3.</span> <span class="nav-text">EVDO系统</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LTE%E7%B3%BB%E7%BB%9F"><span class="nav-number">1.4.</span> <span class="nav-text">LTE系统</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#chapter14-TDD%E7%A7%BB%E5%8A%A8%E9%80%9A%E4%BF%A1%E7%B3%BB%E7%BB%9F"><span class="nav-number">2.</span> <span class="nav-text">chapter14 TDD移动通信系统</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#TDD%E5%8E%9F%E7%90%86"><span class="nav-number">2.1.</span> <span class="nav-text">TDD原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TD-SCDMA"><span class="nav-number">2.2.</span> <span class="nav-text">TD-SCDMA</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UTRA-TDD"><span class="nav-number">2.3.</span> <span class="nav-text">UTRA TDD</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TD-HSPA"><span class="nav-number">2.4.</span> <span class="nav-text">TD-HSPA</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#chapter15-%E7%A7%BB%E5%8A%A8%E7%BD%91%E7%BB%9C%E7%9A%84%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BB%84%E6%88%90"><span class="nav-number">3.</span> <span class="nav-text">chapter15 移动网络的结构与组成</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%8EGSM-x2F-GPRS%E5%80%BCWCDMA%E7%BD%91%E7%BB%9C%E7%9A%84%E6%BC%94%E8%BF%9B"><span class="nav-number">3.1.</span> <span class="nav-text">从GSM&#x2F;GPRS值WCDMA网络的演进</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%8EIS95%E5%88%B0CDMA%E7%BD%91%E7%BB%9C%E7%9A%84%E6%BC%94%E8%BF%9B"><span class="nav-number">3.2.</span> <span class="nav-text">从IS95到CDMA网络的演进</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#B3G%E4%B8%8E4G%E7%A7%BB%E5%8A%A8%E9%80%9A%E4%BF%A1%E7%BD%91%E7%BB%9C"><span class="nav-number">3.3.</span> <span class="nav-text">B3G与4G移动通信网络</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#chapter16-%E7%A7%BB%E5%8A%A8%E7%BD%91%E7%BB%9C%E8%BF%90%E8%A1%8C"><span class="nav-number">4.</span> <span class="nav-text">chapter16 移动网络运行</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A7%BB%E5%8A%A8%E9%80%9A%E4%BF%A1%E4%B8%AD%E7%9A%84%E4%B8%9A%E5%8A%A1%E7%B1%BB%E5%9E%8B"><span class="nav-number">4.1.</span> <span class="nav-text">移动通信中的业务类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%91%BC%E5%8F%AB%E5%BB%BA%E7%AB%8B%E4%B8%8E%E8%BF%9E%E6%8E%A5%E2%80%93%E7%A7%BB%E5%8A%A8%E9%80%9A%E4%BF%A1%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE%E5%A4%84%E7%90%86%E7%9A%84%E5%A4%A7%E5%A4%B4%EF%BC%8C%E9%9D%9E%E5%B8%B8%E5%A4%8D%E6%9D%82%E3%80%81%E5%BA%9E%E6%9D%82"><span class="nav-number">4.2.</span> <span class="nav-text">呼叫建立与连接–移动通信网络协议处理的大头，非常复杂、庞杂</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A7%BB%E5%8A%A8%E6%80%A7%E7%AE%A1%E7%90%86"><span class="nav-number">4.3.</span> <span class="nav-text">移动性管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%A0%E7%BA%BF%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86RRM"><span class="nav-number">4.4.</span> <span class="nav-text">无线资源管理RRM</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B7%A8%E5%B1%82%E4%BC%98%E5%8C%96"><span class="nav-number">4.5.</span> <span class="nav-text">跨层优化</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="XuJie_BUPT"
+      src="/images/tracer.jpg">
+  <p class="site-author-name" itemprop="name">XuJie_BUPT</p>
+  <div class="site-description" itemprop="description">希望自己摆脱身上的冷气，尽力发光发热</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/tracerXJ" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;tracerXJ" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/about/" title="E-Mail → &#x2F;about&#x2F;"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/images/weixinid.jpg" title="Weixin → &#x2F;images&#x2F;weixinid.jpg"><i class="fab fa-weixin fa-fw"></i>Weixin</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2023-1-19 – 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">XuJie_BUPT</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">101k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">1:32</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

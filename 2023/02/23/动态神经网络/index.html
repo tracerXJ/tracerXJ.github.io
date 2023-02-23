@@ -20,20 +20,20 @@
     var CONFIG = {"hostname":"xj-bupt.top","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+  <meta name="description" content="动态神经网络：提高网络的性能、效率 样本自适应动态网络：动态结构、动态参数（1）动态结构：动态深度、动态宽度、动态路由①　动态深度：不同分辨率的图像选择不同深度的网络层。 实现方法：（A）早退机制（网络中间的层输出结果）–实现方式：（a）多个完整的模型串联起来，但是模型是单独设计的，无法进行复用（b）主干网络添加中间的输出层，但是链式结构中一般浅层只学习local的feature，它是不利于分类的">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://xj-bupt.top/2023/01/19/hello-world/index.html">
+<meta property="og:title" content="动态神经网络">
+<meta property="og:url" content="http://xj-bupt.top/2023/02/23/%E5%8A%A8%E6%80%81%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/index.html">
 <meta property="og:site_name" content="Life Record Blog">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta property="og:description" content="动态神经网络：提高网络的性能、效率 样本自适应动态网络：动态结构、动态参数（1）动态结构：动态深度、动态宽度、动态路由①　动态深度：不同分辨率的图像选择不同深度的网络层。 实现方法：（A）早退机制（网络中间的层输出结果）–实现方式：（a）多个完整的模型串联起来，但是模型是单独设计的，无法进行复用（b）主干网络添加中间的输出层，但是链式结构中一般浅层只学习local的feature，它是不利于分类的">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-01-19T02:17:27.570Z">
-<meta property="article:modified_time" content="2023-01-19T06:42:50.738Z">
+<meta property="article:published_time" content="2023-02-23T15:19:45.556Z">
+<meta property="article:modified_time" content="2023-02-23T15:22:47.049Z">
 <meta property="article:author" content="XuJie_BUPT">
-<meta property="article:tag" content="测试">
+<meta property="article:tag" content="深度学习">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://xj-bupt.top/2023/01/19/hello-world/">
+<link rel="canonical" href="http://xj-bupt.top/2023/02/23/%E5%8A%A8%E6%80%81%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/">
 
 
 <script id="page-configurations">
@@ -46,7 +46,7 @@
   };
 </script>
 
-  <title>Hello World | Life Record Blog</title>
+  <title>动态神经网络 | Life Record Blog</title>
   
 
 
@@ -168,7 +168,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xj-bupt.top/2023/01/19/hello-world/">
+    <link itemprop="mainEntityOfPage" href="http://xj-bupt.top/2023/02/23/%E5%8A%A8%E6%80%81%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/tracer.jpg">
@@ -181,7 +181,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Hello World
+          动态神经网络
         </h1>
 
         <div class="post-meta">
@@ -192,7 +192,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2023-01-19 10:17:27 / 修改时间：14:42:50" itemprop="dateCreated datePublished" datetime="2023-01-19T10:17:27+08:00">2023-01-19</time>
+              <time title="创建时间：2023-02-23 23:19:45 / 修改时间：23:22:47" itemprop="dateCreated datePublished" datetime="2023-02-23T23:19:45+08:00">2023-02-23</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -200,7 +200,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%B5%8B%E8%AF%95/" itemprop="url" rel="index"><span itemprop="name">测试</span></a>
+                  <a href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">深度学习</span></a>
                 </span>
             </span>
 
@@ -210,14 +210,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>367</span>
+              <span>3k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>3 分钟</span>
             </span>
 
         </div>
@@ -229,19 +229,27 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+        <h2 id="动态神经网络：提高网络的性能、效率"><a href="#动态神经网络：提高网络的性能、效率" class="headerlink" title="动态神经网络：提高网络的性能、效率"></a>动态神经网络：提高网络的性能、效率</h2><ol>
+<li><p>样本自适应动态网络：动态结构、动态参数<br>（1）动态结构：动态深度、动态宽度、动态路由<br>①　动态深度：不同分辨率的图像选择不同深度的网络层。<br> 实现方法：<br>（A）早退机制（网络中间的层输出结果）–实现方式：（a）多个完整的模型串联起来，但是模型是单独设计的，无法进行复用（b）主干网络添加中间的输出层，但是链式结构中一般浅层只学习local的feature，它是不利于分类的，解决方法：采用多尺度架构使得网络的浅层（此时的层可以理解为深度层的叠加，满足置信度时推出网络的推理）也有利于分类<br>（B）跳层机制：跳过网络的中间层，例如resnet。–实现方式：（a）图像输入gating module确定输出值，决定是否进行卷积运算（b）输入图片进入policy network，决定是否执行哪一层的模块<br>②　动态宽度：卷积通道的数目自适应，通过某种方式决定某种输出的通道不需要计算<br> 实现方法：<br>（A）gating module产生一个二值的决策，输出一个向量，决定哪些通道需要计算，减少卷积通道数目类似于静态的网络剪枝数目（不同：剪枝会永久的去掉一些卷积核，次数是根据输入的feature动态决定的，自适应性更高）<br>（B）添加多层结构，直到置信度满足要求时吗，再停止加宽通道数目<br>（C）MoE：多个并行的分支进行选择性的执行-mixture of experts：产生gate module决定哪些分支需要被计算，而不是采用软机制的方式<br>③　动态路由：基于复杂的窗网络结构–多样的前向传播路径，动态地决定前向计算图。多尺度结构–路由节点决定分配到哪些子树、树状结构–根据样本决定是否连接节点。<br>（2）动态参数：推理阶段不改变计算图–计算量不变，参数动态化提高网络的表达能力。卷积核的ensemble和soft moe的效果一样–卷积求和等价于求和卷积<br>①　参数调节：（A）输入的feature生成一个调节量，调节量改变卷积核的参数，再进行卷积运算（B）卷积核的形状调节–达到一个动态的感受野<br>②　参数预测：输入的feature直接生成一个卷积核，将这个卷积核和输入进行运算<br>③　动态特征：attention机制，对特征进行动态调节，transform利用queue和key的相似度进行调节，senet对卷积通道进行动态调节<br> SENET：	input通过attention module产生一个通道注意力，基于这个结果对原来的			输入进行rescale，得到动态特征<br> 空间attention：对图像的像素点进行rescale</p>
+</li>
+<li><p>空间自适应：（图像视频空间位置进行自适应，不同区域的信息量是不一样的）传统卷积网络在不同输入位置进行相同计算<br>（1）像素级：对input feature生成一个mask，用来预测重要的区域，根据这个mask进行稀疏的卷积得到稀疏输出，可能会造成性能损失–利用采样的区域进行插值，来弥补效果<br>（2）区域级：决定原图中重要的crop输入给神经网络。图像分类问题重建为crop依次预测，直到满足置信率的要求<br>（3）分辨率：不是所有的样本都需要高分辨率进行表示，采用多尺度架构，利用小的子网络处理低分辨率，大的子网络处理高分辨率的特征，基于早退机制，置信度满足就不再调用高分辨率的图像</p>
+</li>
+<li><p>时间自适应：序列结构的数据–文本、视频，对不同时间位置的输入进行自适应计算，例如视频识别时，一些帧就可以做出判断，减少无用帧的冗余信息<br>（1）非重要时刻的输入，使用低的计算量，rnn状态更新时，输入帧先判断是否重要–gate，不重要直接copy到下一时刻，不进行状态更新或者进行部分状态更新<br>（2）rnn能够自适应决定是否跳出一些时刻的输入</p>
+</li>
+<li><p>推理过程中的决策问题：<br>（1）基于置信度决定是否早退。优点：不需要额外计算，根据阈值判断<br>（2）基于层执行与否。policy网络的输出维度等于主干网络的block个数<br>（3）gating module：采用轻量化计算决定哪些部分需要计算，需要更长的训练过程</p>
+</li>
+<li><p>训练方法：<br>（1）训练目标：<br>①　早退机制的多出口网络：目标–多出口的分类loss进行加权相加，或者使用知识蒸馏的方法来提高训练能力<br>②　跳层、channel 的训练方法：增加一个loss spase–增加一个稀疏度损失，或者基于flops进行优化<br>（2）优化方法：离散决策产生的0、1变量–没有梯度信息，很难直接反向求导进行优化<br>①　gumbel softmax为代表的重参数化技术，对梯度进行估计，用于训练gate function，网络前向传播会产生0、1的离散变量，反向传播对mask的输出能够准确估计他们的梯度，引入了gumble 的随机变量，会加长训练时间<br>②　强化学习：用于训练policy network来决定跳层、patch、帧</p>
+</li>
+</ol>
+<h2 id="讨论："><a href="#讨论：" class="headerlink" title="讨论："></a>讨论：</h2><p>本章对动态网络领域内的开放性问题和未来研究方向进行了讨论，包括以下方面：</p>
+<ol>
+<li>动态网络理论。包括 1) 最优决策问题：决策是大多数动态网络推理过程中一个本质性的操作。现有方法(基于置信度、策略网络或门函数)均缺乏一定的理论保障，且并不一定是最优的决策方式。因此，设计具有理论保障的决策函数是未来很有价值的研究方向。2) 泛化性能。在动态模型中，不同的子网络被不同的测试样本激活，导致这些子网络在训练和测试阶段所面临数据分布存在一定偏差。因此，对于动态网络泛化性能的新理论将是一个有趣的课题。</li>
+<li>动态网络的结构设计。目前大多数网络结构方面的工作致力于设计静态网络，而多数动态网络设计方法基于已有的经典静态模型架构，选择性的执行其中的不同单元。这对于动态网络的结构设计可能只是一个次优解，例如MSDNet中的多尺度架构与密集连接可以较好的解决之前链式多出口网络分类器之间相互干扰的问题。因此，针对于自适应计算的动态网络结构设计可以进一步提升其性能和运算效率。</li>
+<li>更多样任务下的适用性。目前大多数动态网络仍只是针对分类任务设计，难以直接运用于其他视觉任务，如目标检测和语义分割。其难点在于这些任务中没有一个简单的准则来判断样本的难易程度，而一个样本中又包含多个不同复杂度的目标&#x2F;像素点。现有的一些方法，如空间自适应网络和软注意力机制，已经可以用于分类之外的更多任务。然而，设计一个统一而简洁优雅，并可以直接作为其他任务主干网络的动态网络结构仍然具有一定的挑战性。</li>
+<li>实际效率与理论的差距。现有的深度学习计算硬件和软件库大多针对静态模型开发，对于动态模型的加速尚不够友好，从而导致动态模型的实际加速可能落后于理论效果。因此，设计硬件友好的动态网络是一个有价值和挑战性的课题。另一个有趣的方向则是进一步优化计算硬件和软件平台，从而更好的收获动态网络带来的理论效率提升。</li>
+<li>鲁棒性。近期工作已经显示，动态模型可以为深度网络的鲁棒性带来新的研究角度。另外，通常的对抗攻击致力于降低模型准确率，而对于动态网络，可以同时攻击模型的准确率和效率。因此，动态网络的鲁棒性是一个有趣而尚未被充分研究的课题。</li>
+<li>可解释性。动态网络继承了深度神经网络的“黑箱”特性，带来了解释其工作机制的研究方向。特别之处在于，动态网络的自适应推理机制，如空间&#x2F;时间上的自适应性，与人类的视觉系统相符合。另外，对于一个给定样本，可以很方便的分析动态网络做出预测需要激活哪些部分。我们期望这些性质可以启发新的深度学习可解释性方面的工作。</li>
+</ol>
 
     </div>
 
@@ -277,7 +285,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://xj-bupt.top/2023/01/19/hello-world/" title="Hello World">http://xj-bupt.top/2023/01/19/hello-world/</a>
+    <a href="http://xj-bupt.top/2023/02/23/%E5%8A%A8%E6%80%81%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" title="动态神经网络">http://xj-bupt.top/2023/02/23/动态神经网络/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -288,7 +296,7 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/%E6%B5%8B%E8%AF%95/" rel="tag"># 测试</a>
+              <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" rel="tag"># 深度学习</a>
           </div>
 
         
@@ -296,11 +304,11 @@
 
         
     <div class="post-nav">
-      <div class="post-nav-item"></div>
       <div class="post-nav-item">
-    <a href="/2023/01/19/newyear2023/" rel="next" title="新年快乐">
-      新年快乐 <i class="fa fa-chevron-right"></i>
+    <a href="/2023/02/23/%E5%8D%9A%E4%B8%80%E4%B8%8B%E8%A7%84%E5%88%92/" rel="prev" title="博一下学期规划">
+      <i class="fa fa-chevron-left"></i> 博一下学期规划
     </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -359,7 +367,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Quick-Start"><span class="nav-number">1.</span> <span class="nav-text">Quick Start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-a-new-post"><span class="nav-number">1.1.</span> <span class="nav-text">Create a new post</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run-server"><span class="nav-number">1.2.</span> <span class="nav-text">Run server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate-static-files"><span class="nav-number">1.3.</span> <span class="nav-text">Generate static files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deploy-to-remote-sites"><span class="nav-number">1.4.</span> <span class="nav-text">Deploy to remote sites</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%EF%BC%9A%E6%8F%90%E9%AB%98%E7%BD%91%E7%BB%9C%E7%9A%84%E6%80%A7%E8%83%BD%E3%80%81%E6%95%88%E7%8E%87"><span class="nav-number">1.</span> <span class="nav-text">动态神经网络：提高网络的性能、效率</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%A8%E8%AE%BA%EF%BC%9A"><span class="nav-number">2.</span> <span class="nav-text">讨论：</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

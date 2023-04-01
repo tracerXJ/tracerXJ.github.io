@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"xj-bupt.top","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="JPEG压缩 色彩空间CMYK：青色、品红、黄色、黑色四种颜色配比–通常用于印刷 色彩空间RGB：红色、绿色、蓝色–通常用于电脑屏幕的显示 JPEG压缩采用YUV模型–三个分量 Y亮度、Cb彩度蓝、Cr彩度红： 人眼的工作机制–视锥细胞（感知颜色的能力）、视杆细胞（细胞多，更加敏感，感知亮度的能力） JPEG处理步骤：step1.将RGB色彩模型转化为YUV色彩模型，图片的形状大小不变step2.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="分离设计的语法通信的方案">
+<meta property="og:url" content="http://xj-bupt.top/2023/04/01/sscc/index.html">
+<meta property="og:site_name" content="Life Record Blog">
+<meta property="og:description" content="JPEG压缩 色彩空间CMYK：青色、品红、黄色、黑色四种颜色配比–通常用于印刷 色彩空间RGB：红色、绿色、蓝色–通常用于电脑屏幕的显示 JPEG压缩采用YUV模型–三个分量 Y亮度、Cb彩度蓝、Cr彩度红： 人眼的工作机制–视锥细胞（感知颜色的能力）、视杆细胞（细胞多，更加敏感，感知亮度的能力） JPEG处理步骤：step1.将RGB色彩模型转化为YUV色彩模型，图片的形状大小不变step2.">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://xj-bupt.top/images/JPEG2000_encode.PNG">
+<meta property="og:image" content="http://xj-bupt.top/images/JPEG2000_decode.PNG">
+<meta property="article:published_time" content="2023-04-01T04:03:53.481Z">
+<meta property="article:modified_time" content="2023-04-01T04:03:14.055Z">
+<meta property="article:author" content="XuJie_BUPT">
+<meta property="article:tag" content="语法通信">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://xj-bupt.top/images/JPEG2000_encode.PNG">
+
+<link rel="canonical" href="http://xj-bupt.top/2023/04/01/sscc/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>分离设计的语法通信的方案 | Life Record Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/rss2.xml" title="Life Record Blog" type="application/rss+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Life Record Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">生活记录博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xj-bupt.top/2023/04/01/sscc/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/tracer.jpg">
+      <meta itemprop="name" content="XuJie_BUPT">
+      <meta itemprop="description" content="多读书，多看报，少吃零食，多睡觉">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Life Record Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          分离设计的语法通信的方案
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2023-04-01 12:03:53 / 修改时间：12:03:14" itemprop="dateCreated datePublished" datetime="2023-04-01T12:03:53+08:00">2023-04-01</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AF%AD%E6%B3%95%E9%80%9A%E4%BF%A1SSCC/" itemprop="url" rel="index"><span itemprop="name">语法通信SSCC</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.4k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="JPEG压缩"><a href="#JPEG压缩" class="headerlink" title="JPEG压缩"></a>JPEG压缩</h3><ol>
+<li>色彩空间CMYK：青色、品红、黄色、黑色四种颜色配比–通常用于印刷</li>
+<li>色彩空间RGB：红色、绿色、蓝色–通常用于电脑屏幕的显示</li>
+<li>JPEG压缩采用YUV模型–三个分量 Y亮度、Cb彩度蓝、Cr彩度红：<br> 人眼的工作机制–视锥细胞（感知颜色的能力）、视杆细胞（细胞多，更加敏感，感知亮度的能力）</li>
+<li>JPEG处理步骤：<br>step1.将RGB色彩模型转化为YUV色彩模型，图片的形状大小不变<br>step2.进行色度抽样，对每个像素点的Y、Cb、Cr三个分量采取4：2：0的抽样，Y全部保留，Cb、Cr–进行1&#x2F;4取样、间隔取样：例如奇数行取Cb，偶数行取Cr，间隔一列取样一次<br> 像素点为N，大小为3N的图像，色度抽样后大小变为1.5N，成为缩减采样</li>
+</ol>
+<p>step3.进行离散余弦变换DCT–有损压缩的关键：每张图像的每个像素都可以用余弦函数来表示，形成频域编码，<br>        DCT将频域编码进行变换，低频放在左上角（低能量–主要部分），高频信号放在右下角（高能量–细节，剧烈的变换，对图像影响不大，大体样子还在）<br>        JPEG算法将图像分为8×8的像素组，每组用自己的离散余弦变换（相邻像素点数颜色相似的概率较大、过大的单元格会大幅增加离散余弦变换的运算量、过小导致精度下降）进行频域编码<br>        量化：对高频区进行大幅简化和压缩的行为，量化后的高频区域会出线大量连续的0<br>step4.对图像的8×8的像素数值进行压缩：（高频区域会出线大量连续的0）使用熵编码技术，对数据进行编码<br>        JPEG以z字形遍历数据，得到zigzag排列的数据，使用huffman编码技术压缩（EOB字段代表全0）<br>      将图像所有的8×8像素组依次进行编码就可以压缩整个图像</p>
+<h3 id="JPEG2000压缩"><a href="#JPEG2000压缩" class="headerlink" title="JPEG2000压缩"></a>JPEG2000压缩</h3><ol>
+<li>对比JPEG：	（1）将JPEG的DCT和huffman编码转换为DWT和EBCOT。在有损压缩下，JPEG2000一个比较明显的优点就是没有JPEG压缩中的马赛克失真效果。<br>         JPEG2000的失真主要是模糊失真。模糊失真产生的主要原因是在编码过程中高频量一定程度的衰减。传统的JPEG压缩也存在模糊失真的问题。<br>         （2）在低压缩比情形下（比如压缩比小于10：1），传统的JPEG图像质量有可能要比JPEG2000要好.JPEG2000在压缩比比较高的情形下，优势才开始明显。<br>         （3）整体来说，和传统的JPEG相比，JPEG2000仍然有很大的技术优势，通常压缩性能大概可以提高20%以上。一般在压缩比达到100：1的情形下，<br>         采用JPEG压缩的图像已经严重失真并开始难以识别了，但JPEG2000的图像仍可识别。</li>
+<li>有损压缩图像质量或失真程度一般用峰值信噪比（PSNR）指标来衡量，但是不能完全反映人类视觉效果。<br>编码过程：<br><img src="/images/JPEG2000_encode.PNG" alt="本地路径"><br>其中图像预处理包括：图像分块、电平平移归一化、颜色变化<br>解码过程：<br><img src="/images/JPEG2000_decode.PNG" alt="本地路径"></li>
+</ol>
+<h3 id="LDPC编码"><a href="#LDPC编码" class="headerlink" title="LDPC编码"></a>LDPC编码</h3><p>1.解码过程总结<br>（1）硬判决（比特反转算法）：错误校验方程最多的变量节点进行比特翻转，依次检验并进行迭代<br>（2）软判决（置信传播算法）：	<br>        step1.根据校验矩阵生成M矩阵–竖直方向，0-P0，1-P1<br>        step2.根据M矩阵（变量矩阵）得到校验矩阵E–横向，满足约束方程，使用同行非0元素进行运算<br>        step3.根据E进行列求和，进行似然比判断，检验是否满足校验关系<br>        step4.不满足则更新M–横向：根据E同行的非0元素数值和初始的M矩阵进行更新，再次检验判断</p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>感谢阅读！.</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.jpg" alt="XuJie_BUPT 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.jpg" alt="XuJie_BUPT 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>XuJie_BUPT
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://xj-bupt.top/2023/04/01/sscc/" title="分离设计的语法通信的方案">http://xj-bupt.top/2023/04/01/sscc/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E8%AF%AD%E6%B3%95%E9%80%9A%E4%BF%A1/" rel="tag"># 语法通信</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/03/13/%E5%9F%BA%E4%BA%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9A%84%E7%89%A9%E7%90%86%E5%B1%82%E9%80%9A%E4%BF%A1%E7%9A%84%E8%AE%BE%E8%AE%A1%E8%AE%B2%E5%BA%A7/" rel="prev" title="通信技术前沿讲座">
+      <i class="fa fa-chevron-left"></i> 通信技术前沿讲座
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#JPEG%E5%8E%8B%E7%BC%A9"><span class="nav-number">1.</span> <span class="nav-text">JPEG压缩</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JPEG2000%E5%8E%8B%E7%BC%A9"><span class="nav-number">2.</span> <span class="nav-text">JPEG2000压缩</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LDPC%E7%BC%96%E7%A0%81"><span class="nav-number">3.</span> <span class="nav-text">LDPC编码</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="XuJie_BUPT"
+      src="/images/tracer.jpg">
+  <p class="site-author-name" itemprop="name">XuJie_BUPT</p>
+  <div class="site-description" itemprop="description">多读书，多看报，少吃零食，多睡觉</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/tracerXJ" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;tracerXJ" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/about/" title="E-Mail → &#x2F;about&#x2F;"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/images/weixinid.jpg" title="Weixin → &#x2F;images&#x2F;weixinid.jpg"><i class="fab fa-weixin fa-fw"></i>Weixin</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2023-1-19 – 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">XuJie_BUPT</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">99k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">1:30</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

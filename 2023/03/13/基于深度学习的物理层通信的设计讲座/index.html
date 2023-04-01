@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"xj-bupt.top","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="基于深度学习物理层通信-2022.8.4–高飞飞–清华大学邮箱：&amp;#x66;&amp;#x65;&amp;#x69;&amp;#x66;&amp;#101;&amp;#105;&amp;#103;&amp;#x61;&amp;#111;&amp;#x40;&amp;#116;&amp;#115;&amp;#105;&amp;#110;&amp;#103;&amp;#104;&amp;#x75;&amp;#x61;&amp;#46;&amp;#101;&amp;#100;&amp;#x75;&amp;#46;&amp;#x63;&amp;#x6e; 背景 5G时空频资源殆尽，新出现了数据">
+<meta property="og:type" content="article">
+<meta property="og:title" content="通信技术前沿讲座">
+<meta property="og:url" content="http://xj-bupt.top/2023/03/13/%E5%9F%BA%E4%BA%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9A%84%E7%89%A9%E7%90%86%E5%B1%82%E9%80%9A%E4%BF%A1%E7%9A%84%E8%AE%BE%E8%AE%A1%E8%AE%B2%E5%BA%A7/index.html">
+<meta property="og:site_name" content="Life Record Blog">
+<meta property="og:description" content="基于深度学习物理层通信-2022.8.4–高飞飞–清华大学邮箱：&amp;#x66;&amp;#x65;&amp;#x69;&amp;#x66;&amp;#101;&amp;#105;&amp;#103;&amp;#x61;&amp;#111;&amp;#x40;&amp;#116;&amp;#115;&amp;#105;&amp;#110;&amp;#103;&amp;#104;&amp;#x75;&amp;#x61;&amp;#46;&amp;#101;&amp;#100;&amp;#x75;&amp;#46;&amp;#x63;&amp;#x6e; 背景 5G时空频资源殆尽，新出现了数据">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://xj-bupt.top/images/yuyi_20230317_01.PNG">
+<meta property="og:image" content="http://xj-bupt.top/images/yuyi_20230317_02.PNG">
+<meta property="og:image" content="http://xj-bupt.top/images/yuyi_20230317_0.PNG">
+<meta property="og:image" content="http://xj-bupt.top/images/yuyi_20230317_03.PNG">
+<meta property="og:image" content="http://xj-bupt.top/images/yuyi_20230317_04.PNG">
+<meta property="og:image" content="http://xj-bupt.top/images/yuyi_20230317_05.PNG">
+<meta property="og:image" content="http://xj-bupt.top/images/yuyi_20230317_06.PNG">
+<meta property="og:image" content="http://xj-bupt.top/images/yuyi_20230317_07.PNG">
+<meta property="og:image" content="http://xj-bupt.top/images/yuyi_20230317_08.PNG">
+<meta property="og:image" content="http://xj-bupt.top/images/yuyi_20230317_09.PNG">
+<meta property="og:image" content="http://xj-bupt.top/images/yuyi_20230317_10.PNG">
+<meta property="og:image" content="http://xj-bupt.top/images/yuyi_20230317_11.PNG">
+<meta property="og:image" content="http://xj-bupt.top/images/yuyi_20230317_12.PNG">
+<meta property="og:image" content="http://xj-bupt.top/images/yuyi_20230317_13.PNG">
+<meta property="og:image" content="http://xj-bupt.top/images/yuyi_20230317_14.PNG">
+<meta property="article:published_time" content="2023-03-13T13:03:23.493Z">
+<meta property="article:modified_time" content="2023-03-19T07:20:16.350Z">
+<meta property="article:author" content="XuJie_BUPT">
+<meta property="article:tag" content="通信前沿讲座">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://xj-bupt.top/images/yuyi_20230317_01.PNG">
+
+<link rel="canonical" href="http://xj-bupt.top/2023/03/13/%E5%9F%BA%E4%BA%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9A%84%E7%89%A9%E7%90%86%E5%B1%82%E9%80%9A%E4%BF%A1%E7%9A%84%E8%AE%BE%E8%AE%A1%E8%AE%B2%E5%BA%A7/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>通信技术前沿讲座 | Life Record Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/rss2.xml" title="Life Record Blog" type="application/rss+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Life Record Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">生活记录博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xj-bupt.top/2023/03/13/%E5%9F%BA%E4%BA%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9A%84%E7%89%A9%E7%90%86%E5%B1%82%E9%80%9A%E4%BF%A1%E7%9A%84%E8%AE%BE%E8%AE%A1%E8%AE%B2%E5%BA%A7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/tracer.jpg">
+      <meta itemprop="name" content="XuJie_BUPT">
+      <meta itemprop="description" content="多读书，多看报，少吃零食，多睡觉">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Life Record Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          通信技术前沿讲座
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-03-13 21:03:23" itemprop="dateCreated datePublished" datetime="2023-03-13T21:03:23+08:00">2023-03-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-03-19 15:20:16" itemprop="dateModified" datetime="2023-03-19T15:20:16+08:00">2023-03-19</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%80%9A%E4%BF%A1%E5%89%8D%E6%B2%BF%E8%AE%B2%E5%BA%A7/" itemprop="url" rel="index"><span itemprop="name">通信前沿讲座</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.8k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="基于深度学习物理层通信-2022-8-4–高飞飞–清华大学"><a href="#基于深度学习物理层通信-2022-8-4–高飞飞–清华大学" class="headerlink" title="基于深度学习物理层通信-2022.8.4–高飞飞–清华大学"></a>基于深度学习物理层通信-2022.8.4–高飞飞–清华大学</h2><p>邮箱：<a href="mailto:&#x66;&#x65;&#x69;&#x66;&#101;&#105;&#103;&#x61;&#111;&#x40;&#116;&#115;&#105;&#110;&#103;&#104;&#x75;&#x61;&#46;&#101;&#100;&#x75;&#46;&#x63;&#x6e;">&#x66;&#x65;&#x69;&#x66;&#101;&#105;&#103;&#x61;&#111;&#x40;&#116;&#115;&#105;&#110;&#103;&#104;&#x75;&#x61;&#46;&#101;&#100;&#x75;&#46;&#x63;&#x6e;</a></p>
+<h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><ol>
+<li>5G时空频资源殆尽，新出现了<strong>数据维度</strong>。–无线通信有着完美的模型，不太注重用数据作文章。但是通信系统越来越庞杂，传统的通信模型可能会不准确，数据+模型一起驱动的算法：非线性表征，目前问题开始没有闭式解，使用智能算法来降低算法的复杂度</li>
+<li>5G+AI应用：5G高速来支撑AI的应用，但是5G本身是可以智能的</li>
+<li>6G（1）空天地一体化：秉承了空间资源的高效利用和挖掘（2）mm波、Thz波–频率资源（3）数据维度的智能化发展</li>
+</ol>
+<h3 id="人工智能改进传统算法"><a href="#人工智能改进传统算法" class="headerlink" title="人工智能改进传统算法"></a>人工智能改进传统算法</h3><ol>
+<li>东南大学–金石老师</li>
+<li><strong>信道估计</strong>–模型数据双驱动：（1）重点–导频足够长，深度学校效果不超过LMMSE–会存在一个界限，当导频数不够时，一定性能会超越LMMSE（2）运动是非平稳的过程，基于统计的模型可能会存在问题，使用旧的统计矩阵会存在偏差，当使用大量的数据训练时，此时的不确定性会减小</li>
+<li>信道反馈CSI–传统压缩感知–线性稀疏的表征方式，但是实际是复杂的，实用性不好的原因–仿真效果好，但是实际数据会存在问题。使用深度学校表征效果好</li>
+<li>高频器件的精度误差，通用公式很难描述这样的误差，但是实际的误差是难以确定的，使用大量训练来确定未知的方程</li>
+<li>MIMO检测–模型精准下使用数据：神经网络做迭代展开，能够降低复杂度，但是维持一定的精度</li>
+<li>雷达通信一体化–确定信源的个数：传统是没有很好的公式的表征，使用深度学习方法来达到一个好的效果（低功率下方法好）：这里的可解释性较差</li>
+</ol>
+<h3 id="传统算法失效，使用AI算法研究"><a href="#传统算法失效，使用AI算法研究" class="headerlink" title="传统算法失效，使用AI算法研究"></a>传统算法失效，使用AI算法研究</h3><ol>
+<li>频段上进行预测(1)FDD信道上下行信道不一样，上下行信道的不可描述的相关性，很难基于数学进行表征。经过训练，输入上行信道，输出为下行信道，得到零导频开销的下行估计：频段差阅读，预测的误差越大。(2)3.5G预测2.8G的信道–包络相似（隐含信道指向信息–波束成形+资源分配的信息），因为环境不变，因此上行信道包含下行的信息，但这更多的细节进行建模分析很难，可以使用深度学习技术：将发送导频+上行信息进行融合设计以到达更好的效果</li>
+<li>时间上进行预测</li>
+<li>空间上预测：天线上进行外推：原始的64个天线进行信道估计，现在只需要估计其中的8个（导频资源）就行–选择哪8个–不可以进行建模：选择网络–选择离散的值（同时可导），网络设计尽量可解释性</li>
+</ol>
+<h3 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h3><ol>
+<li>信道本质上是由于环境引起的，不妨将深度回来，将效果回退到环境那一层–场景定，能不能拿到信道，或者拿到波束指向，或者通信传输的某个参数–这个是可以肯定的。信道是场景+频率的函数，使用图片、视频能否建联起这样的关系，进行信道的估计</li>
+<li>难点:(1)场景的数据库–需要与通信参数关联（2）信道建模的数据库也没有办法使用，不知道什么场景获得–图片中的一点–对应一个信道状况：从图像开始预测信道</li>
+<li>基于上，可以做的事情：（1）根据环境信息，预测通信的参数–粗的知识：<strong>波束形成和跟踪</strong>–直接生成beam（2）遮挡预判：传统通信在做波扫，可以很好的<strong>判断遮挡</strong></li>
+<li>总之，传输内容不变，但是通信高可靠、高速的建立依靠视觉信息</li>
+<li>视觉的方法在RIS方面很好使用，复杂的计算单元一般不会放在ris中，一般两端进行信道估计，再反馈给RIS，在RIS放置摄像头，在此基础上，判断波束指向，直接生成反向的传递–移动中的ris展示会比较少，传统的方法很难，使用视觉的方式会简单一些</li>
+</ol>
+<h3 id="深度学习的可解释性"><a href="#深度学习的可解释性" class="headerlink" title="深度学习的可解释性"></a>深度学习的可解释性</h3><ol>
+<li>传统的AI领域难以解释，因为没有起手的模型，但是通信存在起手的公式</li>
+<li>深度学习可以达到最优的mmse估计，而不是lmmse估计。深度学习的检测子可以达到MAP算法</li>
+</ol>
+<h3 id="结论：有模型的学科，存在人工智能的用武之地"><a href="#结论：有模型的学科，存在人工智能的用武之地" class="headerlink" title="结论：有模型的学科，存在人工智能的用武之地"></a>结论：有模型的学科，存在人工智能的用武之地</h3><p>数据驱动与场景有关：怎么获取数据、数据在不同场景的泛化程度？迁移学习的方式可能不会很好，小区分扇区，不同扇区神经网络不同；同时将来不能完全依托于数据驱动的方式，需要设计融合性的网络，将导频和本身数据进行拼接，增加输出的稳定性，在场景细微变化可能能起作用，但是大的变化需要划分为不同的小区，小区间进行切换时，也会引入新的网络之间的切换</p>
+<h2 id="6G通信感知计算融合：理论与技术-2022-7-21–彭木根–北京邮电大学"><a href="#6G通信感知计算融合：理论与技术-2022-7-21–彭木根–北京邮电大学" class="headerlink" title="6G通信感知计算融合：理论与技术-2022.7.21–彭木根–北京邮电大学"></a>6G通信感知计算融合：理论与技术-2022.7.21–彭木根–北京邮电大学</h2><p>融合？一体化？深度融合？协同？辅助？<br>融合实际上是不同维度、不同学科、不同领域合在一起做一些事情<br>文字本身的内涵是什么</p>
+<h3 id="为什么融合"><a href="#为什么融合" class="headerlink" title="为什么融合"></a>为什么融合</h3><ol>
+<li>为什么现在要融合？移动通信要突破通信这一维度，通信2c–用户，2b–垂直行业使用。通信的主题是人、机、物–6G解决2B的事情，不是为了仅仅增加通话速度</li>
+<li>5G继承1-4G不断叠加维度–通信维度叠加东西来提高通信速率，5G这个时代跌价了边缘计算、云计算、空地互联、VR、AR–实际上也是外挂的，6G要求2B，需要把外挂变成一体，XR、空天地海一体化、智能简约、算力一体、安全内生</li>
+<li>未来的应用：权威的imt-2030（6G推荐组）、赛迪把不同行业的应用进行标准化、爱立信、紫光詹睿——-不约而同：无人机、智慧车联网、工业互联网、XR技术作为行业内公认的应用</li>
+<li>这些应用：embb–个人、urllc、mmtc–传感通信的需求。不同行业解耦、跨层。不同领域的无法跨层mmtc、urllc没有满足设定的目标，因此需要满足感知、计算、通信、控制进行融合。智慧车联网再怎么做也达不到行业的需求0.1ms–无法达到要求，高精度定位10cm的误差无法满足要求，智能体无人机应急通信需要地下的控制–不能智能的根据业务提供覆盖范围，元宇宙–移动通信的数字基建的支撑无法满足要求。需要三者不同的领域进行融合，智简网络适配不同的业务需求，这也是6G时代需求。</li>
+<li>1960年移动通信发展起来了，感知通信的融合，后期通信计算融合、通信计算感知一起融合等等<br><img src="/images/yuyi_20230317_01.PNG" alt="本地路径"></li>
+</ol>
+<h3 id="融合的理论基础是什么"><a href="#融合的理论基础是什么" class="headerlink" title="融合的理论基础是什么"></a>融合的理论基础是什么</h3><p>1.通信理论<br><img src="/images/yuyi_20230317_02.PNG" alt="本地路径"><br>2.感知理论<br><img src="/images/yuyi_20230317_0.PNG" alt="本地路径"><br>3.计算理论<br><img src="/images/yuyi_20230317_03.PNG" alt="本地路径"><br>4.通感一体化<br>(1)通信中引入感知性能<br><img src="/images/yuyi_20230317_04.PNG" alt="本地路径"><br>(2)在雷达中引入通信性能<br><img src="/images/yuyi_20230317_05.PNG" alt="本地路径"><br>(3)基于csi的感知通信融合理论<br><img src="/images/yuyi_20230317_06.PNG" alt="本地路径"><br>(4)基于高频段通信感知性能关系理论<br><img src="/images/yuyi_20230317_07.PNG" alt="本地路径"><br>(5)结合内容缓存的通算融合性能<br><img src="/images/yuyi_20230317_08.PNG" alt="本地路径"><br>(6)通算融合：计算能力不一致的情况下，通信需要考虑时延–不同介入策略对通算性能的影响<br><img src="/images/yuyi_20230317_09.PNG" alt="本地路径"><br>(7)新分析模型展望–通感算三者融合<br><img src="/images/yuyi_20230317_10.PNG" alt="本地路径"></p>
+<h3 id="如何设计体系架构，制定相关的标准"><a href="#如何设计体系架构，制定相关的标准" class="headerlink" title="如何设计体系架构，制定相关的标准"></a>如何设计体系架构，制定相关的标准</h3><ol>
+<li>跟踪现有的6G网络体系架构：中国联通cube-net、移动–三层四面、电信–三层三扇，oppo–ai cube三维，中兴–通感算智一体化<br><img src="/images/yuyi_20230317_11.PNG" alt="本地路径"></li>
+<li>关键问题：如何跟现有的通信网络进行融合？<br>两个维度：协同（松耦合）、一体（紧耦合）<br><img src="/images/yuyi_20230317_12.PNG" alt="本地路径"></li>
+<li>6G网络体系架构的设计<br><img src="/images/yuyi_20230317_13.PNG" alt="本地路径"><br>对应的网元功能与协议<br><img src="/images/yuyi_20230317_14.PNG" alt="本地路径"></li>
+</ol>
+<h3 id="基于标准应该如何解决关键技术，去提高性能增益"><a href="#基于标准应该如何解决关键技术，去提高性能增益" class="headerlink" title="基于标准应该如何解决关键技术，去提高性能增益"></a>基于标准应该如何解决关键技术，去提高性能增益</h3><p>这部分后续需要研究的后查询相关论文即可</p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>感谢阅读！.</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.jpg" alt="XuJie_BUPT 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.jpg" alt="XuJie_BUPT 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>XuJie_BUPT
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://xj-bupt.top/2023/03/13/%E5%9F%BA%E4%BA%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9A%84%E7%89%A9%E7%90%86%E5%B1%82%E9%80%9A%E4%BF%A1%E7%9A%84%E8%AE%BE%E8%AE%A1%E8%AE%B2%E5%BA%A7/" title="通信技术前沿讲座">http://xj-bupt.top/2023/03/13/基于深度学习的物理层通信的设计讲座/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E9%80%9A%E4%BF%A1%E5%89%8D%E6%B2%BF%E8%AE%B2%E5%BA%A7/" rel="tag"># 通信前沿讲座</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/02/23/%E5%8A%A8%E6%80%81%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" rel="prev" title="动态神经网络">
+      <i class="fa fa-chevron-left"></i> 动态神经网络
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/04/01/sscc/" rel="next" title="分离设计的语法通信的方案">
+      分离设计的语法通信的方案 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%89%A9%E7%90%86%E5%B1%82%E9%80%9A%E4%BF%A1-2022-8-4%E2%80%93%E9%AB%98%E9%A3%9E%E9%A3%9E%E2%80%93%E6%B8%85%E5%8D%8E%E5%A4%A7%E5%AD%A6"><span class="nav-number">1.</span> <span class="nav-text">基于深度学习物理层通信-2022.8.4–高飞飞–清华大学</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-number">1.1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%94%B9%E8%BF%9B%E4%BC%A0%E7%BB%9F%E7%AE%97%E6%B3%95"><span class="nav-number">1.2.</span> <span class="nav-text">人工智能改进传统算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%A0%E7%BB%9F%E7%AE%97%E6%B3%95%E5%A4%B1%E6%95%88%EF%BC%8C%E4%BD%BF%E7%94%A8AI%E7%AE%97%E6%B3%95%E7%A0%94%E7%A9%B6"><span class="nav-number">1.3.</span> <span class="nav-text">传统算法失效，使用AI算法研究</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%9D%E8%80%83"><span class="nav-number">1.4.</span> <span class="nav-text">思考</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9A%84%E5%8F%AF%E8%A7%A3%E9%87%8A%E6%80%A7"><span class="nav-number">1.5.</span> <span class="nav-text">深度学习的可解释性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%93%E8%AE%BA%EF%BC%9A%E6%9C%89%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%AD%A6%E7%A7%91%EF%BC%8C%E5%AD%98%E5%9C%A8%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E7%9A%84%E7%94%A8%E6%AD%A6%E4%B9%8B%E5%9C%B0"><span class="nav-number">1.6.</span> <span class="nav-text">结论：有模型的学科，存在人工智能的用武之地</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6G%E9%80%9A%E4%BF%A1%E6%84%9F%E7%9F%A5%E8%AE%A1%E7%AE%97%E8%9E%8D%E5%90%88%EF%BC%9A%E7%90%86%E8%AE%BA%E4%B8%8E%E6%8A%80%E6%9C%AF-2022-7-21%E2%80%93%E5%BD%AD%E6%9C%A8%E6%A0%B9%E2%80%93%E5%8C%97%E4%BA%AC%E9%82%AE%E7%94%B5%E5%A4%A7%E5%AD%A6"><span class="nav-number">2.</span> <span class="nav-text">6G通信感知计算融合：理论与技术-2022.7.21–彭木根–北京邮电大学</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%9E%8D%E5%90%88"><span class="nav-number">2.1.</span> <span class="nav-text">为什么融合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%9E%8D%E5%90%88%E7%9A%84%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">2.2.</span> <span class="nav-text">融合的理论基础是什么</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E8%AE%BE%E8%AE%A1%E4%BD%93%E7%B3%BB%E6%9E%B6%E6%9E%84%EF%BC%8C%E5%88%B6%E5%AE%9A%E7%9B%B8%E5%85%B3%E7%9A%84%E6%A0%87%E5%87%86"><span class="nav-number">2.3.</span> <span class="nav-text">如何设计体系架构，制定相关的标准</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E6%A0%87%E5%87%86%E5%BA%94%E8%AF%A5%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%E5%85%B3%E9%94%AE%E6%8A%80%E6%9C%AF%EF%BC%8C%E5%8E%BB%E6%8F%90%E9%AB%98%E6%80%A7%E8%83%BD%E5%A2%9E%E7%9B%8A"><span class="nav-number">2.4.</span> <span class="nav-text">基于标准应该如何解决关键技术，去提高性能增益</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="XuJie_BUPT"
+      src="/images/tracer.jpg">
+  <p class="site-author-name" itemprop="name">XuJie_BUPT</p>
+  <div class="site-description" itemprop="description">多读书，多看报，少吃零食，多睡觉</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/tracerXJ" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;tracerXJ" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/about/" title="E-Mail → &#x2F;about&#x2F;"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/images/weixinid.jpg" title="Weixin → &#x2F;images&#x2F;weixinid.jpg"><i class="fab fa-weixin fa-fw"></i>Weixin</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2023-1-19 – 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">XuJie_BUPT</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">99k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">1:30</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
